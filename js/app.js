@@ -1,0 +1,1 @@
+console.log("JS and JQuery are linked");
