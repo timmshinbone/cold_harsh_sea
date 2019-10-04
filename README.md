@@ -48,9 +48,7 @@ Make your selection between a Sea Turtle, a Shark, and a Whale and try to surviv
 
 - if user dies, death screen shows up telling score, time survived, and giving option to play again or return to home screen.
 
-- to view wireframe images and beginning stages of planning, click the link below
-
-[Follow the link for wireframe and planning images](https://github.com/timmshinbone/cold_harsh_sea/tree/master/chs_images/wf_chs_images/cold_harsh_sea_wireframes "wireframe and planning images")
+[Follow this link for wireframe and planning images](https://github.com/timmshinbone/cold_harsh_sea/tree/master/chs_images/wf_chs_images/cold_harsh_sea_wireframes "wireframe and planning images")
 
 
 
