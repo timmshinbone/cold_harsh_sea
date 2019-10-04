@@ -50,10 +50,27 @@ Make your selection between a Sea Turtle, a Shark, and a Whale and try to surviv
 
 ![Title Screen WireFrame](https://github.com/timmshinbone/cold_harsh_sea/blob/master/chs_images/wf_chs_images/cold_harsh_sea_wireframes/CHS_TitleScreen_Layout.jpg "Title Screen WireFrame")
 
+![Info Screen WireFrame](https://github.com/timmshinbone/cold_harsh_sea/blob/master/chs_images/wf_chs_images/cold_harsh_sea_wireframes/CHS_InfoScreen_Layout.jpg "Info Screen WireFrame")
 
+![Gameplay Screen Basic WireFrame](https://github.com/timmshinbone/cold_harsh_sea/blob/master/chs_images/wf_chs_images/cold_harsh_sea_wireframes/CHS_GamePlay_Layout.jpg "Gameplay Screen Basic WireFrame")
+
+![Basic Gameplay View Wireframe](https://github.com/timmshinbone/cold_harsh_sea/blob/master/chs_images/wf_chs_images/cold_harsh_sea_wireframes/CHS_basic_gameplay_view.jpg "Basic Gameplay view")
+
+![Win Condition WireFrame](https://github.com/timmshinbone/cold_harsh_sea/blob/master/chs_images/wf_chs_images/cold_harsh_sea_wireframes/CHS_Win_Condition.jpg "Win Condition WireFrame")
+
+![Death Condition WireFrame](https://github.com/timmshinbone/cold_harsh_sea/blob/master/chs_images/wf_chs_images/cold_harsh_sea_wireframes/CHS_Death_Condition.jpg "Death Condition WireFrame")
+
+![Whale Animation Idea](https://github.com/timmshinbone/cold_harsh_sea/blob/master/chs_images/wf_chs_images/cold_harsh_sea_wireframes/CHS_whale_potential_Animation.jpg "Whale potential animation")
 
 
 [Follow this link for the rest of the wireframe and planning images](https://github.com/timmshinbone/cold_harsh_sea/tree/master/chs_images/wf_chs_images/cold_harsh_sea_wireframes "wireframe and planning images")
+
+
+
+
+
+
+
 
 
 
