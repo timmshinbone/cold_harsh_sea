@@ -48,7 +48,7 @@ Make your selection between a Sea Turtle, a Shark, and a Whale and try to surviv
 
 - if user dies, death screen shows up telling score, time survived, and giving option to play again or return to home screen.
 
-![Title Screen WireFrame](https://github.com/timmshinbone/cold_harsh_sea/blob/master/chs_images/wf_chs_images/cold_harsh_sea_wireframes/CHS_TitleScreen_Layout.jpg)
+![Title Screen WireFrame](https://github.com/timmshinbone/cold_harsh_sea/blob/master/chs_images/wf_chs_images/cold_harsh_sea_wireframes/CHS_TitleScreen_Layout.jpg "Title Screen WireFrame")
 
 
 
