@@ -16,7 +16,7 @@ const turtle = {
 	height: 40,
 	width: 60,
 	color: "green",
-	speed: 20,
+	speed: 2,
 	direction: {
 		up: false,
 		right: false,
@@ -29,39 +29,41 @@ const turtle = {
 		ctx.fillStyle = this.color;
 		ctx.fill();
 	},
-	move(direction) {
-		if(direction === "ArrowUp") {
-			this.direction.up = true;
-			this.y -= this.speed;
+	setDirection(key) {
+		//pressing key moves character in direction
+		//move called every 1/60th of a second regardless for smooth moves
+		if(key == "ArrowUp") this.direction.up = true;
+		if(key == "ArrowRight") this.direction.right = true;
+		if(key == "ArrowDown") this.direction.down = true;
+		if(key == "ArrowLeft") this.direction.left = true;
+	},
+		//releasing key stops movement
+	unsetDirection(key) {
+		if(key == "ArrowUp") this.direction.up = false;
+		if(key == "ArrowRight") this.direction.right = false;
+		if(key == "ArrowDown") this.direction.down = false;
+		if(key == "ArrowLeft") this.direction.left = false;
+	},
+	move() {
+		//call in animate - moves 60 fps
+		//constrain movement outside of canvas per each direction
+		if(this.direction.up) this.y -= this.speed
 			if(this.y <= 0) {
 				this.y = 0;
 			}
-		}
-		if(direction === "ArrowRight") {
-			this.direction.right = true;
-			this.x += this.speed;
+		if(this.direction.right) this.x += this.speed
 			if((this.x + this.width) >= canvas.width) {
 				this.x = (canvas.width - this.width);
 			}
-		}
-		if(direction === "ArrowDown") {
-			this.direction.down = true;
-			this.y += this.speed;
+		if(this.direction.down)	this.y += this.speed;
 			if((this.y + this.height) >= canvas.height) {
 				this.y = (canvas.height - this.height);
 			}
-		}
-		if(direction === "ArrowLeft") {
-			this.direction.left = true;
-			this.x -= this.speed;
+		if(this.direction.left) this.x -= this.speed;
 			if(this.x <= 0) {
 				this.x = 0;
 			}
-		}
-		clearCanvas();
-		this.draw();
-		smallFood.draw()
-	},
+		},
 	checkCollision(thing) {
 		if(
 			this.x + this.width > thing.x &&
@@ -103,9 +105,9 @@ smallFood.draw();
 
 let x = 0;
 function animate(){
-	console.log(++x);
 
 	smallFood.move();
+	turtle.move();
 	clearCanvas();
 	smallFood.draw();
 	turtle.draw();
@@ -124,8 +126,14 @@ function animate(){
 //// EVENT LISTENERS ////
 
 document.addEventListener('keydown', (event) => {
-	turtle.move(event.key);
+	turtle.setDirection(event.key);
 });
+
+document.addEventListener('keyup', (event) => {
+	if(["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"].includes(event.key)) {
+		turtle.unsetDirection(event.key)
+	}
+})
 
 document.getElementById('startButton').addEventListener('click', (event) => {
 	animate();
