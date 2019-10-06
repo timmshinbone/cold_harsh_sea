@@ -61,6 +61,17 @@ const turtle = {
 		clearCanvas();
 		this.draw();
 		smallFood.draw()
+	},
+	checkCollision(thing) {
+		if(
+			this.x + this.width > thing.x &&
+			this.x < thing.x + thing.width &&
+			this.y + this.height > thing.y &&
+			this.y < thing.y + thing.height
+		)	{
+			return true
+		}
+		else return false;
 	}
 }
 
@@ -68,7 +79,7 @@ turtle.draw();
 
 const smallFood = {
 	x: 620,
-	y: 20,
+	y: 250,
 	height: 20,
 	width: 20,
 	color: "blue",
@@ -80,6 +91,10 @@ const smallFood = {
 	},
 	move() {
 		this.x -= 5;
+		if(this.x === 0){
+			this.x = canvas.width
+			this.y = (Math.random() * 300)
+		};
 	}
 
 }
@@ -94,7 +109,10 @@ function animate(){
 	clearCanvas();
 	smallFood.draw();
 	turtle.draw();
-	
+
+	if(turtle.checkCollision(smallFood)) {
+		console.log("You got some food!");
+	}
 	window.requestAnimationFrame(animate);
 }
 
