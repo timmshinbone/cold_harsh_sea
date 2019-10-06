@@ -16,7 +16,7 @@ const turtle = {
 	height: 40,
 	width: 60,
 	color: "green",
-	speed: 2,
+	speed: 20,
 	direction: {
 		up: false,
 		right: false,
@@ -60,14 +60,28 @@ const turtle = {
 		}
 		clearCanvas();
 		this.draw();
+		smallFood.draw()
 	}
 }
 
 turtle.draw();
 
+const smallFood = {
+	x: 620,
+	y: 20,
+	height: 20,
+	width: 20,
+	color: "blue",
+	draw() {
+		ctx.beginPath();
+		ctx.rect(this.x, this.y, this.width, this.height);
+		ctx.fillStyle = this.color;
+		ctx.fill();
+	}
 
+}
 
-
+smallFood.draw();
 
 
 //// EVENT LISTENERS ////
