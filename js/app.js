@@ -112,6 +112,8 @@ function animate(){
 
 	if(turtle.checkCollision(smallFood)) {
 		console.log("You got some food!");
+		smallFood.x = canvas.width;
+		smallFood.y = (Math.random() * 300)
 	}
 	window.requestAnimationFrame(animate);
 }
