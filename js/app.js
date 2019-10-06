@@ -77,20 +77,39 @@ const smallFood = {
 		ctx.rect(this.x, this.y, this.width, this.height);
 		ctx.fillStyle = this.color;
 		ctx.fill();
+	},
+	move() {
+		this.x -= 5;
 	}
 
 }
 
 smallFood.draw();
 
+let x = 0;
+function animate(){
+	console.log(++x);
+
+	smallFood.move();
+	clearCanvas();
+	smallFood.draw();
+	turtle.draw();
+	
+	window.requestAnimationFrame(animate);
+}
+
+
+
 
 //// EVENT LISTENERS ////
 
 document.addEventListener('keydown', (event) => {
 	turtle.move(event.key);
-})
+});
 
-
+document.getElementById('startButton').addEventListener('click', (event) => {
+	animate();
+});
 
 
 
