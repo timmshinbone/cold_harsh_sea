@@ -2,7 +2,7 @@ body {
 	background-color: steelblue;
 }
 
-#gameScreen {
+#overall {
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
