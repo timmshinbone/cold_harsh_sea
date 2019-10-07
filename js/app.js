@@ -13,7 +13,7 @@ function clearCanvas() {
 
 //declaration of Animal class
 class Animal {
-	constructor(animalType, animalHeight, animalWidth, animalColor, animalSpeed){
+	constructor(animalType, animalHeight, animalWidth, animalColor, animalSpeed, animalHealth){
 		this.x = 40;
 		this.y = 200;
 		this.type = animalType;
@@ -21,6 +21,7 @@ class Animal {
 		this.width = animalWidth;
 		this.color = animalColor;
 		this.speed = animalSpeed;
+		this.health = animalHealth;
 		this.direction = {
 			up: false,
 			right: false,
@@ -82,11 +83,11 @@ class Animal {
 	}
 }
 
-const turtle = new Animal("turtle", 40, 60, "green", 10);
+const turtle = new Animal("turtle", 40, 60, "green", 10, 50);
 
-const shark = new Animal("shark", 60, 160, "grey", 5);
+const shark = new Animal("shark", 60, 160, "grey", 5, 100);
 
-const whale = new Animal("whale", 100, 240, "lightblue", 2);
+const whale = new Animal("whale", 100, 240, "lightblue", 2, 200);
 
 turtle.draw();
 
@@ -95,15 +96,15 @@ turtle.draw();
 // whale.draw();
 
 class Food {
-	constructor(foodType, foodHeight, foodWidth, foodColor, foodHealth, foodSpeed){
+	constructor(foodType, foodHeight, foodWidth, foodColor, foodSpeed, foodHealth){
 		this.x = 620;
 		this.y = 250;
 		this.type = foodType;
 		this.height = foodHeight;
 		this.width = foodWidth;
 		this.color = foodColor;
-		this.health = foodHealth;
 		this.speed = foodSpeed;
+		this.health = foodHealth;
 	}
 	draw() {
 		ctx.beginPath();
@@ -120,18 +121,18 @@ class Food {
 	}
 }
 
-const smallFood = new Food("small", 20, 20, "palegreen", 20, 5);
+const smallFood = new Food("small", 20, 20, "palegreen", 5, 10);
 
 class Garbage {
-	constructor(garbageType, garbageHeight, garbageWidth, garbageColor, garbageDamage, garbageSpeed){
+	constructor(garbageType, garbageHeight, garbageWidth, garbageColor, garbageSpeed, garbageDamage){
 		this.x = 620;
 		this.y = 125;
 		this.type = garbageType;
 		this.height = garbageHeight;
 		this.width = garbageWidth;
 		this.color = garbageColor;
-		this.damage = garbageDamage;
 		this.speed = garbageSpeed;
+		this.damage = garbageDamage;
 	}
 	draw() {
 		ctx.beginPath();
@@ -148,7 +149,7 @@ class Garbage {
 	}
 }
 
-const smallGarbage = new Garbage("straw", 20, 20, "sienna", 5, 2);
+const smallGarbage = new Garbage("straw", 20, 20, "sienna", 5, 10);
 
 
 
@@ -168,7 +169,8 @@ function animate(){
 	smallGarbage.draw();
 
 	if(turtle.checkCollision(smallFood)) {
-		console.log("You got some food!");
+		console.log("You got some food!")
+		console.log(turtle.health += smallFood.health);
 		smallFood.x = canvas.width;
 		smallFood.y = (Math.random() * 300)
 	}
@@ -184,6 +186,7 @@ function animate(){
 	// }
 	if(turtle.checkCollision(smallGarbage)) {
 		console.log("You got nailed by some garbage!");
+		console.log(turtle.health -= smallGarbage.damage);
 		smallGarbage.x = canvas.width;
 		smallGarbage.y = (Math.random() * 300)
 	}
