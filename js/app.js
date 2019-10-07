@@ -11,40 +11,28 @@ function clearCanvas() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-//declaration of turtle object
-const turtle = {
-	x: 40,
-	y: 200,
-	height: 40,
-	width: 60,
-	color: "green",
-	// src = "https://piskel-imgstore-b.appspot.com/img/c0b67c21-e89d-11e9-a815-55ce2b2bafad.gif",
-	speed: 10,
-	direction: {
-		up: false,
-		right: false,
-		down: false,
-		left: false	
-	},
-	// draw() {
-	// 	const turtleImg = new Image(); 
-	// 	turtleImg.onload = function drawImageActualSize() {
-	// 		ctx.drawImage(turtleImg, this.x, this.y)
-	// 	}
-	// 	turtleImg.src = "https://piskel-imgstore-b.appspot.com/img/c0b67c21-e89d-11e9-a815-55ce2b2bafad.gif";
-	// 	function drawImageActualSize(){
-	// 		turtleImg.width = turtle.width;
-	// 		turtleImg.height = turtle.height;
-	// 		ctx.drawImage(this, this.x, this.y, this.width, this.height);
-	// 	}
-
-	// },
+//declaration of Animal class
+class Animal {
+	constructor(animalHeight, animalWidth, animalColor, animalSpeed){
+		this.x = 40;
+		this.y = 200
+		this.height = animalHeight;
+		this.width = animalWidth;
+		this.color = animalColor;
+		this.speed = animalSpeed;
+		this.direction = {
+			up: false,
+			right: false,
+			down: false,
+			left: false	
+		}
+	}
 	draw() {
 		ctx.beginPath();
 		ctx.rect(this.x, this.y, this.width, this.height);
 		ctx.fillStyle = this.color;
 		ctx.fill();
-	},
+	}
 	setDirection(key) {
 		//pressing key moves character in direction
 		//move called every 1/60th of a second regardless for smooth moves
@@ -52,14 +40,14 @@ const turtle = {
 		if(key == "ArrowRight") this.direction.right = true;
 		if(key == "ArrowDown") this.direction.down = true;
 		if(key == "ArrowLeft") this.direction.left = true;
-	},
+	}
 		//releasing key stops movement
 	unsetDirection(key) {
 		if(key == "ArrowUp") this.direction.up = false;
 		if(key == "ArrowRight") this.direction.right = false;
 		if(key == "ArrowDown") this.direction.down = false;
 		if(key == "ArrowLeft") this.direction.left = false;
-	},
+	}
 	move() {
 		//call in animate - moves 60 fps
 		//constrain movement outside of canvas per each direction
@@ -79,7 +67,7 @@ const turtle = {
 			if(this.x <= 0) {
 				this.x = 0;
 			}
-		},
+	}
 	checkCollision(thing) {
 		if(
 			this.x + this.width > thing.x &&
@@ -93,7 +81,25 @@ const turtle = {
 	}
 }
 
-turtle.draw();
+const turtle = new Animal(40, 60, "green", 10);
+
+const shark = new Animal(60, 160, "grey", 5);
+
+const whale = new Animal(100, 240, "lightblue", 2);
+
+// turtle.draw();
+
+// shark.draw();
+
+whale.draw();
+
+//Turtle features
+	// height: 40,
+	// width: 60,
+	// color: "green",
+	// // src = "https://piskel-imgstore-b.appspot.com/img/c0b67c21-e89d-11e9-a815-55ce2b2bafad.gif",
+	// speed: 10,
+
 
 const smallFood = {
 	x: 620,
@@ -123,12 +129,26 @@ let x = 0;
 function animate(){
 
 	smallFood.move();
-	turtle.move();
+	// turtle.move();
+	// shark.move();
+	whale.move();
 	clearCanvas();
-	turtle.draw();
+	// turtle.draw();
+	// shark.draw();
+	whale.draw();
 	smallFood.draw();
 
 	if(turtle.checkCollision(smallFood)) {
+		console.log("You got some food!");
+		smallFood.x = canvas.width;
+		smallFood.y = (Math.random() * 300)
+	}
+	if(shark.checkCollision(smallFood)) {
+		console.log("You got some food!");
+		smallFood.x = canvas.width;
+		smallFood.y = (Math.random() * 300)
+	}
+	if(whale.checkCollision(smallFood)) {
 		console.log("You got some food!");
 		smallFood.x = canvas.width;
 		smallFood.y = (Math.random() * 300)
@@ -143,11 +163,15 @@ function animate(){
 
 document.addEventListener('keydown', (event) => {
 	turtle.setDirection(event.key);
+	shark.setDirection(event.key);
+	whale.setDirection(event.key);
 });
 
 document.addEventListener('keyup', (event) => {
 	if(["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"].includes(event.key)) {
 		turtle.unsetDirection(event.key)
+		shark.unsetDirection(event.key)
+		whale.unsetDirection(event.key)
 	}
 })
 
