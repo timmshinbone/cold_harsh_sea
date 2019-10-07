@@ -193,7 +193,12 @@ function animate(){
 	window.requestAnimationFrame(animate);
 }
 
+const health = document.getElementById("HEALTH");
+health.innerText("HEALTH: " + turtle.health);
 
+const game = {
+	
+}
 
 
 //// EVENT LISTENERS ////
