@@ -13,13 +13,13 @@ function clearCanvas() {
 }
 
 const turtleImage = document.getElementById("selectTurtle");
-// const sharkButton = document.getElementById("selectShark");
-// const whaleButton = document.getElementById("selectWhale");
+turtleImage.classList.add("hidden");
+const sharkButton = document.getElementById("selectShark");
+const whaleButton = document.getElementById("selectWhale");
 
-turtleImage.style.display = "none";
-// sharkButton.style.display = "none";
-// whaleButton.style.display = "none";
-
+// turtleImage.style.display = "none";
+sharkButton.classList.add("hidden");
+whaleButton.classList.add("hidden");
 //declaration of Animal class
 class Animal {
 	constructor(animalType, animalHeight, animalWidth, animalColor, animalSpeed, animalHealth){
