@@ -16,7 +16,7 @@ const turtle = {
 	height: 40,
 	width: 60,
 	color: "green",
-	speed: 2,
+	speed: 5,
 	direction: {
 		up: false,
 		right: false,
