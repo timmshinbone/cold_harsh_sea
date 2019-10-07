@@ -13,9 +13,10 @@ function clearCanvas() {
 
 //declaration of Animal class
 class Animal {
-	constructor(animalHeight, animalWidth, animalColor, animalSpeed){
+	constructor(animalType, animalHeight, animalWidth, animalColor, animalSpeed){
 		this.x = 40;
-		this.y = 200
+		this.y = 200;
+		this.type = animalType;
 		this.height = animalHeight;
 		this.width = animalWidth;
 		this.color = animalColor;
@@ -81,77 +82,110 @@ class Animal {
 	}
 }
 
-const turtle = new Animal(40, 60, "green", 10);
+const turtle = new Animal("turtle", 40, 60, "green", 10);
 
-const shark = new Animal(60, 160, "grey", 5);
+const shark = new Animal("shark", 60, 160, "grey", 5);
 
-const whale = new Animal(100, 240, "lightblue", 2);
+const whale = new Animal("whale", 100, 240, "lightblue", 2);
 
-// turtle.draw();
+turtle.draw();
 
 // shark.draw();
 
-whale.draw();
+// whale.draw();
 
-//Turtle features
-	// height: 40,
-	// width: 60,
-	// color: "green",
-	// // src = "https://piskel-imgstore-b.appspot.com/img/c0b67c21-e89d-11e9-a815-55ce2b2bafad.gif",
-	// speed: 10,
-
-
-const smallFood = {
-	x: 620,
-	y: 250,
-	height: 20,
-	width: 20,
-	color: "blue",
+class Food {
+	constructor(foodType, foodHeight, foodWidth, foodColor, foodHealth, foodSpeed){
+		this.x = 620;
+		this.y = 250;
+		this.type = foodType;
+		this.height = foodHeight;
+		this.width = foodWidth;
+		this.color = foodColor;
+		this.health = foodHealth;
+		this.speed = foodSpeed;
+	}
 	draw() {
 		ctx.beginPath();
 		ctx.rect(this.x, this.y, this.width, this.height);
 		ctx.fillStyle = this.color;
 		ctx.fill();
-	},
+	}
 	move() {
-		this.x -= 5;
+		this.x -= this.speed;
 		if(this.x === 0){
 			this.x = canvas.width
 			this.y = (Math.random() * 300)
 		};
 	}
-
 }
 
-// smallFood.draw();
+const smallFood = new Food("small", 20, 20, "palegreen", 20, 5);
+
+class Garbage {
+	constructor(garbageType, garbageHeight, garbageWidth, garbageColor, garbageDamage, garbageSpeed){
+		this.x = 620;
+		this.y = 125;
+		this.type = garbageType;
+		this.height = garbageHeight;
+		this.width = garbageWidth;
+		this.color = garbageColor;
+		this.damage = garbageDamage;
+		this.speed = garbageSpeed;
+	}
+	draw() {
+		ctx.beginPath();
+		ctx.rect(this.x, this.y, this.width, this.height);
+		ctx.fillStyle = this.color;
+		ctx.fill();
+	}
+	move() {
+		this.x -= this.speed;
+		if(this.x === 0){
+			this.x = canvas.width
+			this.y = (Math.random() * 300)
+		}
+	}
+}
+
+const smallGarbage = new Garbage("straw", 20, 20, "sienna", 5, 2);
+
+
 
 let x = 0;
 function animate(){
 
-	smallFood.move();
-	// turtle.move();
+	turtle.move();
 	// shark.move();
-	whale.move();
+	// whale.move();
+	smallFood.move();
+	smallGarbage.move();
 	clearCanvas();
-	// turtle.draw();
+	turtle.draw();
 	// shark.draw();
-	whale.draw();
+	// whale.draw();
 	smallFood.draw();
+	smallGarbage.draw();
 
 	if(turtle.checkCollision(smallFood)) {
 		console.log("You got some food!");
 		smallFood.x = canvas.width;
 		smallFood.y = (Math.random() * 300)
 	}
-	if(shark.checkCollision(smallFood)) {
-		console.log("You got some food!");
-		smallFood.x = canvas.width;
-		smallFood.y = (Math.random() * 300)
-	}
-	if(whale.checkCollision(smallFood)) {
-		console.log("You got some food!");
-		smallFood.x = canvas.width;
-		smallFood.y = (Math.random() * 300)
+	// if(shark.checkCollision(smallFood)) {
+	// 	console.log("You got some food!");
+	// 	smallFood.x = canvas.width;
+	// 	smallFood.y = (Math.random() * 300)
+	// }
+	// if(whale.checkCollision(smallFood)) {
+	// 	console.log("You got some food!");
+	// 	smallFood.x = canvas.width;
+	// 	smallFood.y = (Math.random() * 300)
+	// }
+	if(turtle.checkCollision(smallGarbage)) {
+		console.log("You got nailed by some garbage!");
+		smallGarbage.x = canvas.width;
+		smallGarbage.y = (Math.random() * 300)
 	}
 	window.requestAnimationFrame(animate);
 }
