@@ -2,6 +2,8 @@
 const canvas = document.getElementById('game-window')
 console.log(canvas);
 
+
+
 const ctx = canvas.getContext('2d');
 console.log(ctx);
 
@@ -16,13 +18,27 @@ const turtle = {
 	height: 40,
 	width: 60,
 	color: "green",
-	speed: 5,
+	// src = "https://piskel-imgstore-b.appspot.com/img/c0b67c21-e89d-11e9-a815-55ce2b2bafad.gif",
+	speed: 10,
 	direction: {
 		up: false,
 		right: false,
 		down: false,
 		left: false	
 	},
+	// draw() {
+	// 	const turtleImg = new Image(); 
+	// 	turtleImg.onload = function drawImageActualSize() {
+	// 		ctx.drawImage(turtleImg, this.x, this.y)
+	// 	}
+	// 	turtleImg.src = "https://piskel-imgstore-b.appspot.com/img/c0b67c21-e89d-11e9-a815-55ce2b2bafad.gif";
+	// 	function drawImageActualSize(){
+	// 		turtleImg.width = turtle.width;
+	// 		turtleImg.height = turtle.height;
+	// 		ctx.drawImage(this, this.x, this.y, this.width, this.height);
+	// 	}
+
+	// },
 	draw() {
 		ctx.beginPath();
 		ctx.rect(this.x, this.y, this.width, this.height);
@@ -101,7 +117,7 @@ const smallFood = {
 
 }
 
-smallFood.draw();
+// smallFood.draw();
 
 let x = 0;
 function animate(){
@@ -109,8 +125,8 @@ function animate(){
 	smallFood.move();
 	turtle.move();
 	clearCanvas();
-	smallFood.draw();
 	turtle.draw();
+	smallFood.draw();
 
 	if(turtle.checkCollision(smallFood)) {
 		console.log("You got some food!");
