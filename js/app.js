@@ -7,9 +7,18 @@ console.log(canvas);
 const ctx = canvas.getContext('2d');
 console.log(ctx);
 
+
 function clearCanvas() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
+
+const turtleImage = document.getElementById("selectTurtle");
+// const sharkButton = document.getElementById("selectShark");
+// const whaleButton = document.getElementById("selectWhale");
+
+turtleImage.style.display = "none";
+// sharkButton.style.display = "none";
+// whaleButton.style.display = "none";
 
 //declaration of Animal class
 class Animal {
@@ -83,18 +92,8 @@ class Animal {
 	}
 }
 
-const turtle = new Animal("turtle", 40, 60, "green", 10, 50);
 
-const shark = new Animal("shark", 60, 160, "grey", 5, 100);
-
-const whale = new Animal("whale", 100, 240, "lightblue", 2, 200);
-
-turtle.draw();
-
-// shark.draw();
-
-// whale.draw();
-
+//declaration of Food class
 class Food {
 	constructor(foodType, foodHeight, foodWidth, foodColor, foodSpeed, foodHealth){
 		this.x = 620;
@@ -121,8 +120,7 @@ class Food {
 	}
 }
 
-const smallFood = new Food("small", 20, 20, "palegreen", 5, 10);
-
+// declaration of Garbage class
 class Garbage {
 	constructor(garbageType, garbageHeight, garbageWidth, garbageColor, garbageSpeed, garbageDamage){
 		this.x = 620;
@@ -149,30 +147,57 @@ class Garbage {
 	}
 }
 
-const smallGarbage = new Garbage("straw", 20, 20, "sienna", 5, 10);
 
+const game = {
 
-
-let x = 0;
-function animate(){
-
-	turtle.move();
-	// shark.move();
-	// whale.move();
-	smallFood.move();
-	smallGarbage.move();
-	clearCanvas();
-	turtle.draw();
+	// playableAnimals: [
+	// 	{turtle: new Animal("turtle", 40, 60, "green", 10, 50)},
+	// 	{shark: new Animal("shark", 60, 160, "grey", 5, 100)},
+	// 	{whale: new Animal("whale", 100, 240, "lightblue", 2, 200)},
+	// ],
+	turtle: new Animal("turtle", 40, 60, "green", 10, 50),
+	// turtle.draw();
 	// shark.draw();
 	// whale.draw();
-	smallFood.draw();
-	smallGarbage.draw();
 
-	if(turtle.checkCollision(smallFood)) {
+	// foodObjects: [
+	// 	{smallFood: new Food("small", 20, 20, "palegreen", 5, 10)},
+	// ],
+	smallFood: new Food("small", 20, 20, "palegreen", 5, 10),
+
+	// floatingDebris: [
+	// 	{smallGarbage: new Garbage("straw", 20, 20, "sienna", 5, 10)}
+	// ],
+	smallGarbage: new Garbage("straw", 20, 20, "sienna", 5, 10),
+
+	selectAnimal(){
+		ctx.drawImage(turtleImage, 50, 50);
+		// turtleImage.style.display = "inline"
+		// sharkButton.style.display = "inline"
+		// whaleButton.style.display = "inline"
+	},
+
+}
+
+let x = 0;
+function animate() {
+	game.turtle.move();
+	// shark.move();
+	// whale.move();
+	game.smallFood.move();
+	game.smallGarbage.move();
+	clearCanvas();
+	game.turtle.draw();
+	// shark.draw();
+	// whale.draw();
+	game.smallFood.draw();
+	game.smallGarbage.draw();
+
+	if(game.turtle.checkCollision(game.smallFood)) {
 		console.log("You got some food!")
-		console.log(turtle.health += smallFood.health);
-		smallFood.x = canvas.width;
-		smallFood.y = (Math.random() * 300)
+		console.log(game.turtle.health += game.smallFood.health);
+		game.smallFood.x = canvas.width;
+		game.smallFood.y = (Math.random() * 300)
 	}
 	// if(shark.checkCollision(smallFood)) {
 	// 	console.log("You got some food!");
@@ -184,39 +209,45 @@ function animate(){
 	// 	smallFood.x = canvas.width;
 	// 	smallFood.y = (Math.random() * 300)
 	// }
-	if(turtle.checkCollision(smallGarbage)) {
+	if(game.turtle.checkCollision(game.smallGarbage)) {
 		console.log("You got nailed by some garbage!");
-		console.log(turtle.health -= smallGarbage.damage);
-		smallGarbage.x = canvas.width;
-		smallGarbage.y = (Math.random() * 300)
+		console.log(game.turtle.health -= game.smallGarbage.damage);
+		game.smallGarbage.x = canvas.width;
+		game.smallGarbage.y = (Math.random() * 300)
 	}
 	window.requestAnimationFrame(animate);
 }
 
-const health = document.getElementById("HEALTH");
-health.innerText("HEALTH: " + turtle.health);
+// game.selectAnimal();
 
-const game = {
-	
-}
+// const health = document.getElementById("HEALTH");
+// health.innerText("HEALTH: " + turtle.health);
 
 
-//// EVENT LISTENERS ////
 
+
+
+
+//// EVENT LISTENERS //// EXIST OUTSIDE GAME OBJECT ////
+
+// set directions and abilities of Animals
 document.addEventListener('keydown', (event) => {
-	turtle.setDirection(event.key);
-	shark.setDirection(event.key);
-	whale.setDirection(event.key);
+	game.turtle.setDirection(event.key);
+	// game.shark.setDirection(event.key);
+	// game.whale.setDirection(event.key);
 });
 
+// used to "pause" movement of Animals
 document.addEventListener('keyup', (event) => {
 	if(["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"].includes(event.key)) {
-		turtle.unsetDirection(event.key)
-		shark.unsetDirection(event.key)
-		whale.unsetDirection(event.key)
+		game.turtle.unsetDirection(event.key)
+		// game.shark.unsetDirection(event.key)
+		// game.whale.unsetDirection(event.key)
 	}
 })
 
+
+// start the animation frames
 document.getElementById('startButton').addEventListener('click', (event) => {
 	animate();
 });

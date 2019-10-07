@@ -37,7 +37,7 @@ canvas {
 footer {
 	display: flex;
 	flex-direction: row;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
 	height: 75px;
 }
@@ -56,11 +56,15 @@ footer {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	margin-right: 100px;
+	/*margin-right: 100px;*/
 	border: 1px solid grey;
 }
 
-
+button {
+	background-color: darkslateblue;
+	color: white;
+	width: 100px;
+}
 
 
 
