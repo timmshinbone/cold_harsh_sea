@@ -12,20 +12,21 @@ function clearCanvas() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+const selectionWindow = document.getElementById("selection-window")
 const turtleImage = document.getElementById("selectTurtle");
-turtleImage.classList.add("hidden");
+// turtleImage.classList.add("hidden");
 const sharkButton = document.getElementById("selectShark");
+// sharkButton.classList.add("hidden");
 const whaleButton = document.getElementById("selectWhale");
+// whaleButton.classList.add("hidden");
 
-// turtleImage.style.display = "none";
-sharkButton.classList.add("hidden");
-whaleButton.classList.add("hidden");
+
 //declaration of Animal class
 class Animal {
-	constructor(animalType, animalHeight, animalWidth, animalColor, animalSpeed, animalHealth){
+	constructor(animalImage, animalHeight, animalWidth, animalColor, animalSpeed, animalHealth){
 		this.x = 40;
 		this.y = 200;
-		this.type = animalType;
+		this.image = animalImage;
 		this.height = animalHeight;
 		this.width = animalWidth;
 		this.color = animalColor;
@@ -38,12 +39,16 @@ class Animal {
 			left: false	
 		}
 	}
+	// draw() {
+	// 	ctx.beginPath();
+	// 	ctx.rect(this.x, this.y, this.width, this.height);
+	// 	ctx.fillStyle = this.color;
+	// 	ctx.fill();
+	// }
 	draw() {
-		ctx.beginPath();
-		ctx.rect(this.x, this.y, this.width, this.height);
-		ctx.fillStyle = this.color;
-		ctx.fill();
+		ctx.drawImage(this.image, this.x, this.y);
 	}
+
 	setDirection(key) {
 		//pressing key moves character in direction
 		//move called every 1/60th of a second regardless for smooth moves
@@ -155,7 +160,7 @@ const game = {
 	// 	{shark: new Animal("shark", 60, 160, "grey", 5, 100)},
 	// 	{whale: new Animal("whale", 100, 240, "lightblue", 2, 200)},
 	// ],
-	turtle: new Animal("turtle", 40, 60, "green", 10, 50),
+	turtle: new Animal(turtleImage, 40, 60, "green", 10, 50),
 	// turtle.draw();
 	// shark.draw();
 	// whale.draw();
@@ -171,7 +176,16 @@ const game = {
 	smallGarbage: new Garbage("straw", 20, 20, "sienna", 5, 10),
 
 	selectAnimal(){
-		ctx.drawImage(turtleImage, 50, 50);
+
+		canvas.classList.add("hidden");
+		selectionWindow.classList.remove("hidden");
+		// const turtleImage = document.getElementById("selectTurtle");
+		// turtleImage.classList.remove("hidden");
+		// const sharkButton = document.getElementById("selectShark");
+		// sharkButton.classList.remove("hidden");
+		// const whaleButton = document.getElementById("selectWhale");
+		// whaleButton.classList.remove("hidden");
+		// ctx.drawImage(turtleImage, 50, 50);
 		// turtleImage.style.display = "inline"
 		// sharkButton.style.display = "inline"
 		// whaleButton.style.display = "inline"
@@ -218,7 +232,7 @@ function animate() {
 	window.requestAnimationFrame(animate);
 }
 
-// game.selectAnimal();
+game.selectAnimal();
 
 // const health = document.getElementById("HEALTH");
 // health.innerText("HEALTH: " + turtle.health);
@@ -248,12 +262,15 @@ document.addEventListener('keyup', (event) => {
 
 
 // start the animation frames
-document.getElementById('startButton').addEventListener('click', (event) => {
+// document.getElementById('startButton').addEventListener('click', (event) => {
+// 	animate();
+// });
+
+turtleImage.addEventListener('click', (event) => {
+	selectionWindow.classList.add('hidden');
+	canvas.classList.remove('hidden');
 	animate();
 });
-
-
-
 
 
 
