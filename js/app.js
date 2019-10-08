@@ -100,6 +100,9 @@ class Animal {
 		}
 		else return false;
 	}
+	dieMiserably() {
+		console.log("You have died in the cold, harsh, sea")
+	}
 }
 
 
@@ -160,21 +163,8 @@ class Garbage {
 
 const game = {
 
-	// playableAnimals: [
-	// 	{turtle: new Animal(playTurtle, 40, 60, "green", 10, 50)},
-	// 	{shark: new Animal(playShark, 60, 160, "grey", 5, 100)},
-	// 	{whale: new Animal(playWhale, 100, 240, "lightblue", 2, 200)},
-	// ],
-	// turtle: new Animal(playTurtle, 40, 60, "green", 10, 50),
-	// shark: new Animal(playShark, 60, 160, "grey", 5, 100),
-	// whale: new Animal(playWhale, 100, 240, "lightblue", 2, 200),
-	// turtle.draw();
-	// shark.draw();
-	// whale.draw();
-
-	//variable instantiates new animal based on selectAnimal function
+	//variable instantiates new animal based on selectAnimal(whichAnimal) function
 	animalHero: null,
-	// animalHero: this.animalHeroArray[0],
 
 	// foodObjects: [
 	// 	{smallFood: new Food("small", 20, 20, "palegreen", 5, 10)},
@@ -227,7 +217,7 @@ function animate() {
 
 	if(game.animalHero.checkCollision(game.smallFood)) {
 		console.log("You got some food!");
-		if (game.animalHero.currentHealth > 0 && game.animalHero.currentHealth < game.animalHero.maxHealth){
+		if(game.animalHero.currentHealth > 0 && game.animalHero.currentHealth < game.animalHero.maxHealth){
 			game.animalHero.currentHealth += game.smallFood.health;
 			console.log(game.animalHero.currentHealth);
 		}
@@ -236,7 +226,13 @@ function animate() {
 	}
 	if(game.animalHero.checkCollision(game.smallGarbage)) {
 		console.log("You got nailed by some garbage!");
-		console.log(game.animalHero.currentHealth -= game.smallGarbage.damage);
+		if(game.animalHero.currentHealth > 0) {
+			game.animalHero.currentHealth -= game.smallGarbage.damage;
+			console.log(game.animalHero.currentHealth);
+		}
+		if(game.animalHero.currentHealth === 0){
+			game.animalHero.dieMiserably()
+		}
 		game.smallGarbage.x = canvas.width;
 		game.smallGarbage.y = (Math.random() * 300)
 	}

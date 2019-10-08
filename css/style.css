@@ -22,7 +22,7 @@ header {
 }
 
 h6 {
-	font-family: 'Crimson Text', serif;
+	font-family: 'Press Start 2P', cursive;
 	color: white;
 }
 
@@ -66,21 +66,22 @@ footer {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	margin-left: 100px;
 	border: 1px solid grey;
 }
 
-#specialButton {
+#scoreBoard {
 	display: flex;
 	flex-direction: row;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
-	/*margin-right: 100px;*/
+	width: 200px;
+	margin-right: 100px;
 	border: 1px solid grey;
 }
 
 button {
 	background-color: darkslateblue;
+	font-family: 'Press Start 2P', cursive;
 	color: white;
 	width: 100px;
 }
