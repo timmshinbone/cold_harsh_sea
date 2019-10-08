@@ -17,8 +17,10 @@ const selectTurtle = document.getElementById("selectTurtle");
 const playTurtle = document.getElementById("selectTurtle")
 // turtleImage.classList.add("hidden");
 const selectShark = document.getElementById("selectShark");
+const playShark = document.getElementById("selectShark")
 // sharkButton.classList.add("hidden");
 const selectWhale = document.getElementById("selectWhale");
+const playWhale = document.getElementById("selectWhale");
 // whaleButton.classList.add("hidden");
 
 
@@ -162,6 +164,8 @@ const game = {
 	// 	{whale: new Animal("whale", 100, 240, "lightblue", 2, 200)},
 	// ],
 	turtle: new Animal(playTurtle, 40, 60, "green", 10, 50),
+	shark: new Animal(playShark, 60, 160, "grey", 5, 100),
+	whale: new Animal(playWhale, 100, 240, "lightblue", 2, 200),
 	// turtle.draw();
 	// shark.draw();
 	// whale.draw();
@@ -196,34 +200,34 @@ const game = {
 
 let x = 0;
 function animate() {
-	game.turtle.move();
-	// shark.move();
-	// whale.move();
+	// game.turtle.move();
+	// game.shark.move();
+	game.whale.move();
 	game.smallFood.move();
 	game.smallGarbage.move();
 	clearCanvas();
-	game.turtle.draw();
-	// shark.draw();
-	// whale.draw();
+	// game.turtle.draw();
+	// game.shark.draw();
+	game.whale.draw();
 	game.smallFood.draw();
 	game.smallGarbage.draw();
 
-	if(game.turtle.checkCollision(game.smallFood)) {
-		console.log("You got some food!")
-		console.log(game.turtle.health += game.smallFood.health);
+	// if(game.turtle.checkCollision(game.smallFood)) {
+	// 	console.log("You got some food!")
+	// 	console.log(game.turtle.health += game.smallFood.health);
+	// 	game.smallFood.x = canvas.width;
+	// 	game.smallFood.y = (Math.random() * 300)
+	// }
+	// if(game.shark.checkCollision(smallFood)) {
+	// 	console.log("You got some food!");
+	// 	smallFood.x = canvas.width;
+	// 	smallFood.y = (Math.random() * 300)
+	// }
+	if(game.whale.checkCollision(game.smallFood)) {
+		console.log("You got some food!");
 		game.smallFood.x = canvas.width;
 		game.smallFood.y = (Math.random() * 300)
 	}
-	// if(shark.checkCollision(smallFood)) {
-	// 	console.log("You got some food!");
-	// 	smallFood.x = canvas.width;
-	// 	smallFood.y = (Math.random() * 300)
-	// }
-	// if(whale.checkCollision(smallFood)) {
-	// 	console.log("You got some food!");
-	// 	smallFood.x = canvas.width;
-	// 	smallFood.y = (Math.random() * 300)
-	// }
 	if(game.turtle.checkCollision(game.smallGarbage)) {
 		console.log("You got nailed by some garbage!");
 		console.log(game.turtle.health -= game.smallGarbage.damage);
@@ -247,17 +251,17 @@ game.selectAnimal();
 
 // set directions and abilities of Animals
 document.addEventListener('keydown', (event) => {
-	game.turtle.setDirection(event.key);
+	// game.turtle.setDirection(event.key);
 	// game.shark.setDirection(event.key);
-	// game.whale.setDirection(event.key);
+	game.whale.setDirection(event.key);
 });
 
 // used to "pause" movement of Animals
 document.addEventListener('keyup', (event) => {
 	if(["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"].includes(event.key)) {
-		game.turtle.unsetDirection(event.key)
+		// game.turtle.unsetDirection(event.key)
 		// game.shark.unsetDirection(event.key)
-		// game.whale.unsetDirection(event.key)
+		game.whale.unsetDirection(event.key)
 	}
 })
 
@@ -267,6 +271,7 @@ document.addEventListener('keyup', (event) => {
 // 	animate();
 // });
 
+//pick and play as the turtle
 selectTurtle.addEventListener('click', (event) => {
 	selectionWindow.classList.add('hidden');
 	selectionWindow.style.height = "0px";
@@ -277,6 +282,27 @@ selectTurtle.addEventListener('click', (event) => {
 	animate();
 });
 
+//pick and play as the shark
+selectShark.addEventListener('click', (event) => {
+	selectionWindow.classList.add('hidden');
+	selectionWindow.style.height = "0px";
+	selectTurtle.classList.add("hidden");
+	selectShark.classList.add("hidden");
+	selectWhale.classList.add("hidden");
+	canvas.classList.remove('hidden');
+	animate();
+});
+
+//pick and play as the whale
+selectWhale.addEventListener('click', (event) => {
+	selectionWindow.classList.add('hidden');
+	selectionWindow.style.height = "0px";
+	selectTurtle.classList.add("hidden");
+	selectShark.classList.add("hidden");
+	selectWhale.classList.add("hidden");
+	canvas.classList.remove('hidden');
+	animate();
+});
 
 
 
