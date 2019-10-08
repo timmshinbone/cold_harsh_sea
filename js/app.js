@@ -26,6 +26,8 @@ const playShark = document.getElementById("playShark")
 const selectWhale = document.getElementById("selectWhale");
 const playWhale = document.getElementById("playWhale");
 
+const smallTrash = document.getElementById("smallTrash")
+
 
 //declaration of Animal class
 class Animal {
@@ -137,22 +139,26 @@ class Food {
 
 // declaration of Garbage class
 class Garbage {
-	constructor(garbageType, garbageHeight, garbageWidth, garbageColor, garbageSpeed, garbageDamage){
+	constructor(garbageType, garbageHeight, garbageWidth, garbageImage, garbageSpeed, garbageDamage){
 		this.x = 620;
 		this.y = 125;
 		this.type = garbageType;
 		this.height = garbageHeight;
 		this.width = garbageWidth;
-		this.color = garbageColor;
+		this.image = garbageImage;
 		this.speed = garbageSpeed;
 		this.damage = garbageDamage;
 	}
+	// draw() {
+	// 	ctx.beginPath();
+	// 	ctx.rect(this.x, this.y, this.width, this.height);
+	// 	ctx.fillStyle = this.color;
+	// 	ctx.fill();
+	// }
 	draw() {
-		ctx.beginPath();
-		ctx.rect(this.x, this.y, this.width, this.height);
-		ctx.fillStyle = this.color;
-		ctx.fill();
+		ctx.drawImage(this.image, this.x, this.y);
 	}
+
 	move() {
 		this.x -= this.speed;
 		if(this.x === 0){
@@ -176,7 +182,7 @@ const game = {
 	// floatingDebris: [
 	// 	{smallGarbage: new Garbage("straw", 20, 20, "sienna", 5, 10)}
 	// ],
-	smallGarbage: new Garbage("straw", 20, 20, "sienna", 5, 10),
+	smallGarbage: new Garbage("straw", 20, 20, smallTrash, 5, 10),
 
 	selectAnimal(whichAnimal){
 		canvas.classList.add("hidden");
