@@ -13,11 +13,12 @@ function clearCanvas() {
 }
 
 const selectionWindow = document.getElementById("selection-window")
-const turtleImage = document.getElementById("selectTurtle");
+const selectTurtle = document.getElementById("selectTurtle");
+const playTurtle = document.getElementById("selectTurtle")
 // turtleImage.classList.add("hidden");
-const sharkButton = document.getElementById("selectShark");
+const selectShark = document.getElementById("selectShark");
 // sharkButton.classList.add("hidden");
-const whaleButton = document.getElementById("selectWhale");
+const selectWhale = document.getElementById("selectWhale");
 // whaleButton.classList.add("hidden");
 
 
@@ -160,7 +161,7 @@ const game = {
 	// 	{shark: new Animal("shark", 60, 160, "grey", 5, 100)},
 	// 	{whale: new Animal("whale", 100, 240, "lightblue", 2, 200)},
 	// ],
-	turtle: new Animal(turtleImage, 40, 60, "green", 10, 50),
+	turtle: new Animal(playTurtle, 40, 60, "green", 10, 50),
 	// turtle.draw();
 	// shark.draw();
 	// whale.draw();
@@ -266,8 +267,12 @@ document.addEventListener('keyup', (event) => {
 // 	animate();
 // });
 
-turtleImage.addEventListener('click', (event) => {
+selectTurtle.addEventListener('click', (event) => {
 	selectionWindow.classList.add('hidden');
+	selectionWindow.style.height = "0px";
+	selectTurtle.classList.add("hidden");
+	selectShark.classList.add("hidden");
+	selectWhale.classList.add("hidden");
 	canvas.classList.remove('hidden');
 	animate();
 });

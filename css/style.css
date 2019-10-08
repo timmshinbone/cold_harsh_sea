@@ -37,6 +37,15 @@ h6 {
 	width: 640px;
 }
 
+#selectionIcons {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	height: 150px;
+	width: 640px;
+}
+
 canvas {
 	border: 1px solid black;
 	background-image: url("https://github.com/timmshinbone/cold_harsh_sea/blob/master/chs_images/CHS_Background/background_1.png?raw=true");
