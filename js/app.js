@@ -10,14 +10,17 @@ function clearCanvas() {
 
 //setting images to variables here for ease of calling them in game
 
-const selectionWindow = document.getElementById("selection-window")
-const gameOverWindow = document.getElementById("gameover-window")
-const deathStatement = document.getElementById("deathStatement")
+const selectionWindow = document.getElementById("selection-window");
+const gameOverWindow = document.getElementById("gameover-window");
+const deathStatement = document.getElementById("deathStatement");
+
+const showHealth = document.getElementById("HEALTH");
+
 const selectTurtle = document.getElementById("selectTurtle");
-const playTurtle = document.getElementById("playTurtle")
+const playTurtle = document.getElementById("playTurtle");
 
 const selectShark = document.getElementById("selectShark");
-const playShark = document.getElementById("playShark")
+const playShark = document.getElementById("playShark");
 
 const selectWhale = document.getElementById("selectWhale");
 const playWhale = document.getElementById("playWhale");
@@ -219,12 +222,12 @@ function animate() {
 	game.smallFood.draw();
 	game.smallGarbage.draw();
 	game.animalHero.draw();
+	showHealth.innerText = "HEALTH: " + game.animalHero.currentHealth;
 
 	if(game.animalHero.checkCollision(game.smallFood)) {
 		console.log("You got some food!");
 		if(game.animalHero.currentHealth > 0 && game.animalHero.currentHealth < game.animalHero.maxHealth){
 			game.animalHero.currentHealth += game.smallFood.health;
-			console.log(game.animalHero.currentHealth);
 		}
 		game.smallFood.x = canvas.width;
 		game.smallFood.y = (Math.random() * 300)
