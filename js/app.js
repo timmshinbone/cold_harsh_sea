@@ -27,7 +27,7 @@ const playWhale = document.getElementById("playWhale");
 
 //declaration of Animal class
 class Animal {
-	constructor(animalImage, animalHeight, animalWidth, animalColor, animalSpeed, animalHealth){
+	constructor(animalImage, animalHeight, animalWidth, animalColor, animalSpeed, maxHealth, currentHealth){
 		this.x = 40;
 		this.y = 200;
 		this.image = animalImage;
@@ -35,7 +35,8 @@ class Animal {
 		this.width = animalWidth;
 		this.color = animalColor;
 		this.speed = animalSpeed;
-		this.health = animalHealth;
+		this.maxHealth = maxHealth
+		this.currentHealth = currentHealth;
 		this.direction = {
 			up: false,
 			right: false,
@@ -189,13 +190,13 @@ const game = {
 		canvas.classList.add("hidden");
 		selectionWindow.classList.remove("hidden");
 		if (whichAnimal == "turtle") {
-			this.animalHero = new Animal(playTurtle, 40, 60, "green", 10, 50)
+			this.animalHero = new Animal(playTurtle, 40, 60, "green", 10, 50, 50)
 		}
 		else if (whichAnimal == "shark") {
-			this.animalHero = new Animal(playShark, 60, 160, "grey", 5, 100)
+			this.animalHero = new Animal(playShark, 60, 160, "grey", 5, 100, 100)
 		}
 		else if (whichAnimal == "whale") {
-			this.animalHero = new Animal(playWhale, 100, 240, "lightblue", 2, 200)
+			this.animalHero = new Animal(playWhale, 100, 240, "lightblue", 2, 200, 200)
 		}
 		// const turtleImage = document.getElementById("selectTurtle");
 		// turtleImage.classList.remove("hidden");
@@ -224,25 +225,18 @@ function animate() {
 	game.smallGarbage.draw();
 	game.animalHero.draw();
 
-	// if(game.turtle.checkCollision(game.smallFood)) {
-	// 	console.log("You got some food!")
-	// 	console.log(game.turtle.health += game.smallFood.health);
-	// 	game.smallFood.x = canvas.width;
-	// 	game.smallFood.y = (Math.random() * 300)
-	// }
-	// if(game.shark.checkCollision(smallFood)) {
-	// 	console.log("You got some food!");
-	// 	smallFood.x = canvas.width;
-	// 	smallFood.y = (Math.random() * 300)
-	// }
 	if(game.animalHero.checkCollision(game.smallFood)) {
 		console.log("You got some food!");
+		if (game.animalHero.currentHealth > 0 && game.animalHero.currentHealth < game.animalHero.maxHealth){
+			game.animalHero.currentHealth += game.smallFood.health;
+			console.log(game.animalHero.currentHealth);
+		}
 		game.smallFood.x = canvas.width;
 		game.smallFood.y = (Math.random() * 300)
 	}
 	if(game.animalHero.checkCollision(game.smallGarbage)) {
 		console.log("You got nailed by some garbage!");
-		console.log(game.animalHero.health -= game.smallGarbage.damage);
+		console.log(game.animalHero.currentHealth -= game.smallGarbage.damage);
 		game.smallGarbage.x = canvas.width;
 		game.smallGarbage.y = (Math.random() * 300)
 	}
