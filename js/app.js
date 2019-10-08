@@ -1,11 +1,7 @@
 //initial declaration of canvas and context
 const canvas = document.getElementById('game-window')
-console.log(canvas);
-
-
 
 const ctx = canvas.getContext('2d');
-console.log(ctx);
 
 //clears entire canvas when needed
 function clearCanvas() {
@@ -26,7 +22,8 @@ const playShark = document.getElementById("playShark")
 const selectWhale = document.getElementById("selectWhale");
 const playWhale = document.getElementById("playWhale");
 
-const smallTrash = document.getElementById("smallTrash")
+const smallTrash = document.getElementById("smallTrash");
+const smallFood = document.getElementById("smallFood");
 
 
 //declaration of Animal class
@@ -112,22 +109,20 @@ class Animal {
 
 //declaration of Food class
 class Food {
-	constructor(foodType, foodHeight, foodWidth, foodColor, foodSpeed, foodHealth){
+	constructor(foodType, foodHeight, foodWidth, foodImage, foodSpeed, foodHealth){
 		this.x = 620;
 		this.y = 250;
 		this.type = foodType;
 		this.height = foodHeight;
 		this.width = foodWidth;
-		this.color = foodColor;
+		this.image = foodImage;
 		this.speed = foodSpeed;
 		this.health = foodHealth;
 	}
 	draw() {
-		ctx.beginPath();
-		ctx.rect(this.x, this.y, this.width, this.height);
-		ctx.fillStyle = this.color;
-		ctx.fill();
+		ctx.drawImage(this.image, this.x, this.y);
 	}
+
 	move() {
 		this.x -= this.speed;
 		if(this.x === 0){
@@ -149,12 +144,7 @@ class Garbage {
 		this.speed = garbageSpeed;
 		this.damage = garbageDamage;
 	}
-	// draw() {
-	// 	ctx.beginPath();
-	// 	ctx.rect(this.x, this.y, this.width, this.height);
-	// 	ctx.fillStyle = this.color;
-	// 	ctx.fill();
-	// }
+
 	draw() {
 		ctx.drawImage(this.image, this.x, this.y);
 	}
@@ -177,12 +167,12 @@ const game = {
 	// foodObjects: [
 	// 	{smallFood: new Food("small", 20, 20, "palegreen", 5, 10)},
 	// ],
-	smallFood: new Food("small", 20, 20, "palegreen", 5, 10),
+	smallFood: new Food("small", 20, 20, smallFood, 2, 10),
 
 	// floatingDebris: [
 	// 	{smallGarbage: new Garbage("straw", 20, 20, "sienna", 5, 10)}
 	// ],
-	smallGarbage: new Garbage("straw", 20, 20, smallTrash, 5, 10),
+	smallGarbage: new Garbage("straw", 20, 20, smallTrash, 4, 10),
 
 	selectAnimal(whichAnimal){
 		canvas.classList.add("hidden");
@@ -199,13 +189,6 @@ const game = {
 		else if (whichAnimal == "whale") {
 			this.animalHero = new Animal(playWhale, 100, 240, "lightblue", 2, 200, 200)
 		}
-		// const turtleImage = document.getElementById("selectTurtle");
-		// turtleImage.classList.remove("hidden");
-		// const sharkButton = document.getElementById("selectShark");
-		// sharkButton.classList.remove("hidden");
-		// const whaleButton = document.getElementById("selectWhale");
-		// whaleButton.classList.remove("hidden");
-		// ctx.drawImage(turtleImage, 50, 50);
 	},
 
 }
