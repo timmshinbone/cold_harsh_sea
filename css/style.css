@@ -53,6 +53,16 @@ canvas {
 	/*margin: 25px 25px 75px 25px;*/
 }
 
+#gameover-window {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	background-image: url("https://github.com/timmshinbone/cold_harsh_sea/blob/master/chs_images/CHS_Background/background_1.png?raw=true");
+	height: 360px;
+	width: 640px;
+}
+
 footer {
 	display: flex;
 	flex-direction: row;
@@ -88,6 +98,7 @@ button {
 
 .hidden {
 	display: none;
+	height: 0;
 }
 
 

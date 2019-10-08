@@ -15,6 +15,8 @@ function clearCanvas() {
 //setting images to variables here for ease of calling them in game
 
 const selectionWindow = document.getElementById("selection-window")
+const gameOverWindow = document.getElementById("gameover-window")
+const deathStatement = document.getElementById("deathStatement")
 const selectTurtle = document.getElementById("selectTurtle");
 const playTurtle = document.getElementById("playTurtle")
 
@@ -44,12 +46,6 @@ class Animal {
 			left: false	
 		}
 	}
-	// draw() {
-	// 	ctx.beginPath();
-	// 	ctx.rect(this.x, this.y, this.width, this.height);
-	// 	ctx.fillStyle = this.color;
-	// 	ctx.fill();
-	// }
 	draw() {
 		ctx.drawImage(this.image, this.x, this.y);
 	}
@@ -101,7 +97,13 @@ class Animal {
 		else return false;
 	}
 	dieMiserably() {
-		console.log("You have died in the cold, harsh, sea")
+		console.log("You have died in the cold, harsh, sea");
+		// stopAnimation();
+		canvas.style.height = "0px";
+		canvas.classList.add("hidden")
+		gameOverWindow.classList.remove("hidden");
+		gameOverWindow.style.height = "360px"
+		deathStatement.classList.remove("hidden");
 	}
 }
 
@@ -178,6 +180,9 @@ const game = {
 
 	selectAnimal(whichAnimal){
 		canvas.classList.add("hidden");
+		gameOverWindow.classList.add("hidden");
+		gameOverWindow.style.height = "0px";
+		deathStatement.classList.add("hidden");
 		selectionWindow.classList.remove("hidden");
 		if (whichAnimal == "turtle") {
 			this.animalHero = new Animal(playTurtle, 40, 60, "green", 10, 50, 50)
@@ -198,9 +203,20 @@ const game = {
 	},
 
 }
+
+// //declare stop animation to be called upon game win/lose
+// let requestID;
+// let animationRunning = false;
 //animate function is the start of the game
 let x = 0;
 function animate() {
+
+	// animationRunning = true;
+
+	selectionWindow.style.height = "0px";
+	// gameOverWindow.style.height = "0px";
+	// deathStatement.style.height = "0px";
+	// deathStatement.classList.add("hidden");
 	// game.turtle.move();
 	// game.shark.move();
 	// game.whale.move();
@@ -231,13 +247,18 @@ function animate() {
 			console.log(game.animalHero.currentHealth);
 		}
 		if(game.animalHero.currentHealth === 0){
-			game.animalHero.dieMiserably()
+			game.animalHero.dieMiserably();
 		}
 		game.smallGarbage.x = canvas.width;
 		game.smallGarbage.y = (Math.random() * 300)
 	}
 	window.requestAnimationFrame(animate);
 }
+
+// function stopAnimation() {
+// 	cancelAnimationFrame(requestID)
+// 	animationRunning = false;	
+// };
 
 game.selectAnimal();
 
@@ -254,18 +275,12 @@ game.selectAnimal();
 
 // set directions and abilities of Animals
 document.addEventListener('keydown', (event) => {
-	// game.turtle.setDirection(event.key);
-	// game.shark.setDirection(event.key);
-	// game.whale.setDirection(event.key);
 	game.animalHero.setDirection(event.key);
 });
 
 // used to "pause" movement of Animals
 document.addEventListener('keyup', (event) => {
 	if(["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"].includes(event.key)) {
-		// game.turtle.unsetDirection(event.key);
-		// game.shark.unsetDirection(event.key);
-		// game.whale.unsetDirection(event.key);
 		game.animalHero.unsetDirection(event.key);
 	}
 })
