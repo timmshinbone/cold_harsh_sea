@@ -12,6 +12,8 @@ function clearCanvas() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+//calling images up here loads them before the game begins
+//allows for smoother gameplay, easier selection
 const selectionWindow = document.getElementById("selection-window")
 const selectTurtle = document.getElementById("selectTurtle");
 const playTurtle = document.getElementById("selectTurtle")
@@ -158,14 +160,14 @@ class Garbage {
 
 const game = {
 
-	// playableAnimals: [
-	// 	{turtle: new Animal("turtle", 40, 60, "green", 10, 50)},
-	// 	{shark: new Animal("shark", 60, 160, "grey", 5, 100)},
-	// 	{whale: new Animal("whale", 100, 240, "lightblue", 2, 200)},
-	// ],
-	turtle: new Animal(playTurtle, 40, 60, "green", 10, 50),
-	shark: new Animal(playShark, 60, 160, "grey", 5, 100),
-	whale: new Animal(playWhale, 100, 240, "lightblue", 2, 200),
+	playableAnimal: [
+		{turtle: new Animal(playTurtle, 40, 60, "green", 10, 50)},
+		{shark: new Animal(playShark, 60, 160, "grey", 5, 100)},
+		{whale: new Animal(playWhale, 100, 240, "lightblue", 2, 200)},
+	],
+	// turtle: new Animal(playTurtle, 40, 60, "green", 10, 50),
+	// shark: new Animal(playShark, 60, 160, "grey", 5, 100),
+	// whale: new Animal(playWhale, 100, 240, "lightblue", 2, 200),
 	// turtle.draw();
 	// shark.draw();
 	// whale.draw();
@@ -197,7 +199,7 @@ const game = {
 	},
 
 }
-
+//animate function is the start of the game
 let x = 0;
 function animate() {
 	// game.turtle.move();
