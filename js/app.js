@@ -188,13 +188,13 @@ const game = {
 	selectAnimal(whichAnimal){
 		canvas.classList.add("hidden");
 		selectionWindow.classList.remove("hidden");
-		if (whichAnimal === "turtle") {
+		if (whichAnimal == "turtle") {
 			this.animalHero = new Animal(playTurtle, 40, 60, "green", 10, 50)
 		}
-		else if (whichAnimal === "shark") {
+		else if (whichAnimal == "shark") {
 			this.animalHero = new Animal(playShark, 60, 160, "grey", 5, 100)
 		}
-		else if (whichAnimal === "whale") {
+		else if (whichAnimal == "whale") {
 			this.animalHero = new Animal(playWhale, 100, 240, "lightblue", 2, 200)
 		}
 		// const turtleImage = document.getElementById("selectTurtle");
@@ -293,10 +293,10 @@ selectTurtle.addEventListener('click', (event) => {
 	selectTurtle.classList.add("hidden");
 	selectShark.classList.add("hidden");
 	selectWhale.classList.add("hidden");
+	game.selectAnimal("turtle");
 	canvas.classList.remove('hidden');
-	game.whichAnimal = "turtle"
 	console.log(game.animalHero)
-	// animate();
+	animate();
 });
 
 //pick and start play as the shark
@@ -306,10 +306,10 @@ selectShark.addEventListener('click', (event) => {
 	selectTurtle.classList.add("hidden");
 	selectShark.classList.add("hidden");
 	selectWhale.classList.add("hidden");
+	game.selectAnimal("shark");
 	canvas.classList.remove('hidden');
-	game.whichAnimal = "shark"
 	console.log(game.animalHero)
-	// animate();
+	animate();
 });
 
 //pick and start play as the whale
@@ -319,10 +319,10 @@ selectWhale.addEventListener('click', (event) => {
 	selectTurtle.classList.add("hidden");
 	selectShark.classList.add("hidden");
 	selectWhale.classList.add("hidden");
+	game.selectAnimal("whale");
 	canvas.classList.remove('hidden');
-	game.whichAnimal = "whale"
 	console.log(game.animalHero)
-	// animate();
+	animate();
 });
 
 
