@@ -31,6 +31,8 @@ const playWhale = document.getElementById("playWhale");
 const winWhale = document.getElementById("winWhale");
 
 const smallTrash = document.getElementById("smallTrash");
+const medTrash = document.getElementById("plasticBagDebris");
+const lrgTrash = document.getElementById("tireDebris");
 const smallFood = document.getElementById("smallFood");
 
 
@@ -181,7 +183,7 @@ class Garbage {
 //declaration of win condition class
 class WinCondition {
 	constructor(winImage, winHeight, winWidth, winColor, winSpeed){
-		this.x = 320;
+		this.x = canvas.width;
 		this.y = (Math.random() * 300);
 		this.image = winImage;
 		this.height = winHeight;
@@ -201,12 +203,12 @@ class WinCondition {
 	// }
 
 	move() {
-
+		this.x -= this.speed
+	if(this.x === 0 - this.width) {
 		setTimeout(() => {
-			this.x -= this.speed
-			if(this.x === 0){
-			};
-		}, 5000);
+			this.x = canvas.width + this.width
+		}, 10000);
+	};
 			// this.x = canvas.width
 			// this.y = (Math.random() * 300)
 	}
@@ -228,6 +230,8 @@ const game = {
 	// 	{smallGarbage: new Garbage("straw", 20, 20, "sienna", 5, 10)}
 	// ],
 	smallGarbage: new Garbage("straw", 20, 20, smallTrash, 4, 10),
+	medGarbage: new Garbage("plasticBag", 32, 32, medTrash, 5, 15),
+	lrgGarbage: new Garbage("tire", 60, 60, lrgTrash, 3, 25),
 
 	// winTurtle: new WinCondition("image", 40, 60, "green", 10),
 
