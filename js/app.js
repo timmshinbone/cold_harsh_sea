@@ -241,30 +241,6 @@ const game = {
 		}
 	},
 
-	// startTheClock(){
-	// 	const interval = setInterval(() => {
-	// 		//count seconds moving up
-	// 		this.time += 1;
-	// 		// console.log(this.time);
-	// 		if(this.animalHero.currentHealth === 0) {
-	// 			clearInterval(interval)
-	// 			// this.tamaDies();
-	// 		}
-	// 		if(this.time % 2 === 0){
-	// 			this.smallGarbage.move()	
-	// 		} 
-	// 		if(this.time % 4 === 0){
-	// 			this.smallFood.move()
-	// 		} 
-	// 		if(this.time % 10 === 0){
-	// 			this.winTurtle.move()
-	// 		}
-	// 		console.log(this.interval)
-	// 	}, 1000);
-
-	// },
-
-
 }
 
 // //declare stop animation to be called upon game win/lose
