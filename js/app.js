@@ -119,6 +119,9 @@ class Animal {
 		youWinWindow.classList.remove("hidden");
 		youWinWindow.style.height = "360px";
 		winStatement.classList.remove("hidden");
+		winTurtle.classList.remove("hidden");
+		winShark.classList.remove("hidden");
+		winWhale.classList.remove("hidden");
 		game.animalWin.draw();
 	}
 }
@@ -188,11 +191,14 @@ class WinCondition {
 	}
 	
 	draw() {
-		ctx.beginPath()
-		ctx.rect(this.x, this.y, this.width, this.height)
-		ctx.fillStyle = this.color
-		ctx.fill()
+		ctx.drawImage(this.image, this.x, this.y);
 	}
+	// draw() {
+	// 	ctx.beginPath()
+	// 	ctx.rect(this.x, this.y, this.width, this.height)
+	// 	ctx.fillStyle = this.color
+	// 	ctx.fill()
+	// }
 
 	move() {
 
