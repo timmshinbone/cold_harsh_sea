@@ -193,8 +193,12 @@ class WinCondition {
 	move() {
 		this.x -= this.speed;
 		if(this.x === 0){
-			this.x = canvas.width
-			this.y = (Math.random() * 300)
+			setTimeout(() => {
+				this.x = canvas.width
+				this.y = (Math.random() * 300)
+			}, 10000);
+			// this.x = canvas.width
+			// this.y = (Math.random() * 300)
 		}
 	}
 }
@@ -237,6 +241,30 @@ const game = {
 		}
 	},
 
+	// startTheClock(){
+	// 	const interval = setInterval(() => {
+	// 		//count seconds moving up
+	// 		this.time += 1;
+	// 		// console.log(this.time);
+	// 		if(this.animalHero.currentHealth === 0) {
+	// 			clearInterval(interval)
+	// 			// this.tamaDies();
+	// 		}
+	// 		if(this.time % 2 === 0){
+	// 			this.smallGarbage.move()	
+	// 		} 
+	// 		if(this.time % 4 === 0){
+	// 			this.smallFood.move()
+	// 		} 
+	// 		if(this.time % 10 === 0){
+	// 			this.winTurtle.move()
+	// 		}
+	// 		console.log(this.interval)
+	// 	}, 1000);
+
+	// },
+
+
 }
 
 // //declare stop animation to be called upon game win/lose
@@ -254,6 +282,7 @@ function animate() {
 	game.smallFood.move();
 	game.smallGarbage.move();
 	game.winTurtle.move();
+
 	clearCanvas();
 
 	game.smallFood.draw();
@@ -335,6 +364,7 @@ selectTurtle.addEventListener('click', (event) => {
 	canvas.classList.remove('hidden');
 	console.log(game.animalHero)
 	animate();
+	// game.startTheClock();
 });
 
 //pick and start play as the shark
