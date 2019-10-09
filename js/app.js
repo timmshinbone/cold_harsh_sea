@@ -174,7 +174,7 @@ class Garbage {
 	move() {
 		this.x -= this.speed;
 		if(this.x === 0){
-			this.x = canvas.width
+			this.x = canvas.width;
 			this.y = (Math.random() * 300)
 		}
 	}
@@ -195,12 +195,6 @@ class WinCondition {
 	draw() {
 		ctx.drawImage(this.image, this.x, this.y);
 	}
-	// draw() {
-	// 	ctx.beginPath()
-	// 	ctx.rect(this.x, this.y, this.width, this.height)
-	// 	ctx.fillStyle = this.color
-	// 	ctx.fill()
-	// }
 
 	move() {
 		this.x -= this.speed
@@ -231,7 +225,7 @@ const game = {
 	// ],
 	smallGarbage: new Garbage("straw", 20, 20, smallTrash, 4, 10),
 	medGarbage: new Garbage("plasticBag", 32, 32, medTrash, 5, 15),
-	lrgGarbage: new Garbage("tire", 60, 60, lrgTrash, 3, 25),
+	lrgGarbage: new Garbage("tire", 60, 60, lrgTrash, 2, 25),
 
 	// winTurtle: new WinCondition("image", 40, 60, "green", 10),
 
@@ -274,12 +268,18 @@ function animate() {
 	game.animalHero.move();
 	game.smallFood.move();
 	game.smallGarbage.move();
-	game.animalWin.move();
+	game.medGarbage.move();
+	game.lrgGarbage.move();
+	setTimeout(() => {
+		game.animalWin.move();
+	}, 10000);
 
 	clearCanvas();
 
 	game.smallFood.draw();
 	game.smallGarbage.draw();
+	game.medGarbage.draw();
+	game.lrgGarbage.draw();
 	game.animalWin.draw();
 	game.animalHero.draw();
 	showHealth.innerText = "HEALTH: " + game.animalHero.currentHealth;
@@ -296,13 +296,34 @@ function animate() {
 		console.log("You got nailed by some garbage!");
 		if(game.animalHero.currentHealth > 0) {
 			game.animalHero.currentHealth -= game.smallGarbage.damage;
-			console.log(game.animalHero.currentHealth);
 		}
-		if(game.animalHero.currentHealth === 0){
+		if(game.animalHero.currentHealth <= 0){
 			game.animalHero.dieMiserably();
 		}
 		game.smallGarbage.x = canvas.width;
 		game.smallGarbage.y = (Math.random() * 300)
+	}
+	if(game.animalHero.checkCollision(game.medGarbage)) {
+		console.log("You got nailed by some garbage!");
+		if(game.animalHero.currentHealth > 0) {
+			game.animalHero.currentHealth -= game.medGarbage.damage;
+		}
+		if(game.animalHero.currentHealth <= 0){
+			game.animalHero.dieMiserably();
+		}
+		game.medGarbage.x = canvas.width;
+		game.medGarbage.y = (Math.random() * 300)
+	}
+	if(game.animalHero.checkCollision(game.lrgGarbage)) {
+		console.log("You got nailed by some garbage!");
+		if(game.animalHero.currentHealth > 0) {
+			game.animalHero.currentHealth -= game.lrgGarbage.damage;
+		}
+		if(game.animalHero.currentHealth <= 0){
+			game.animalHero.dieMiserably();
+		}
+		game.lrgGarbage.x = canvas.width;
+		game.lrgGarbage.y = (Math.random() * 300)
 	}
 	if(game.animalHero.checkCollision(game.animalWin)) {
 		game.animalHero.findMate();
