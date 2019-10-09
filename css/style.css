@@ -15,7 +15,7 @@ body {
 header {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+	justify-content: center;
 	align-items: center;
 	max-height: 25px;
 	width: 640px;
@@ -54,6 +54,16 @@ canvas {
 }
 
 #gameover-window {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	background-image: url("https://github.com/timmshinbone/cold_harsh_sea/blob/master/chs_images/CHS_Background/background_1.png?raw=true");
+	height: 360px;
+	width: 640px;
+}
+
+#you-win-window {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;

@@ -13,6 +13,8 @@ function clearCanvas() {
 const selectionWindow = document.getElementById("selection-window");
 const gameOverWindow = document.getElementById("gameover-window");
 const deathStatement = document.getElementById("deathStatement");
+const youWinWindow = document.getElementById("you-win-window");
+const winStatement = document.getElementById("winStatement")
 
 const showHealth = document.getElementById("HEALTH");
 
@@ -104,8 +106,16 @@ class Animal {
 		canvas.style.height = "0px";
 		canvas.classList.add("hidden")
 		gameOverWindow.classList.remove("hidden");
-		gameOverWindow.style.height = "360px"
+		gameOverWindow.style.height = "360px";
 		deathStatement.classList.remove("hidden");
+	}
+	findMate () {
+		console.log("You are biologically successful in the cold, harsh, sea");
+		canvas.style.height = "0px";
+		canvas.classList.add("hidden")
+		youWinWindow.classList.remove("hidden");
+		youWinWindow.style.height = "360px";
+		winStatement.classList.remove("hidden");
 	}
 }
 
@@ -114,7 +124,7 @@ class Animal {
 class Food {
 	constructor(foodType, foodHeight, foodWidth, foodImage, foodSpeed, foodHealth){
 		this.x = 620;
-		this.y = 250;
+		this.y = (Math.random() * 300);
 		this.type = foodType;
 		this.height = foodHeight;
 		this.width = foodWidth;
@@ -139,7 +149,7 @@ class Food {
 class Garbage {
 	constructor(garbageType, garbageHeight, garbageWidth, garbageImage, garbageSpeed, garbageDamage){
 		this.x = 620;
-		this.y = 125;
+		this.y = (Math.random() * 300);
 		this.type = garbageType;
 		this.height = garbageHeight;
 		this.width = garbageWidth;
@@ -150,6 +160,34 @@ class Garbage {
 
 	draw() {
 		ctx.drawImage(this.image, this.x, this.y);
+	}
+
+	move() {
+		this.x -= this.speed;
+		if(this.x === 0){
+			this.x = canvas.width
+			this.y = (Math.random() * 300)
+		}
+	}
+}
+
+//declaration of win condition class
+class WinCondition {
+	constructor(winImage, winHeight, winWidth, winColor, winSpeed){
+		this.x = 600;
+		this.y = (Math.random() * 300);
+		this.image = winImage;
+		this.height = winHeight;
+		this.width = winWidth;
+		this.color = winColor;
+		this.speed = winSpeed;
+	}
+	
+	draw() {
+		ctx.beginPath()
+		ctx.rect(this.x, this.y, this.width, this.height)
+		ctx.fillStyle = this.color
+		ctx.fill()
 	}
 
 	move() {
@@ -177,11 +215,16 @@ const game = {
 	// ],
 	smallGarbage: new Garbage("straw", 20, 20, smallTrash, 4, 10),
 
+	winTurtle: new WinCondition("image", 40, 60, "green", 10),
+
 	selectAnimal(whichAnimal){
 		canvas.classList.add("hidden");
 		gameOverWindow.classList.add("hidden");
 		gameOverWindow.style.height = "0px";
 		deathStatement.classList.add("hidden");
+		youWinWindow.classList.add("hidden");
+		youWinWindow.style.height = "0px";
+		winStatement.classList.add("hidden");
 		selectionWindow.classList.remove("hidden");
 		if (whichAnimal == "turtle") {
 			this.animalHero = new Animal(playTurtle, 40, 60, "green", 10, 50, 50)
@@ -206,21 +249,16 @@ function animate() {
 	// animationRunning = true;
 
 	selectionWindow.style.height = "0px";
-	// gameOverWindow.style.height = "0px";
-	// deathStatement.style.height = "0px";
-	// deathStatement.classList.add("hidden");
-	// game.turtle.move();
-	// game.shark.move();
-	// game.whale.move();
+
 	game.animalHero.move();
 	game.smallFood.move();
 	game.smallGarbage.move();
+	game.winTurtle.move();
 	clearCanvas();
-	// game.turtle.draw();
-	// game.shark.draw();
-	// game.whale.draw();
+
 	game.smallFood.draw();
 	game.smallGarbage.draw();
+	game.winTurtle.draw();
 	game.animalHero.draw();
 	showHealth.innerText = "HEALTH: " + game.animalHero.currentHealth;
 
@@ -243,6 +281,9 @@ function animate() {
 		}
 		game.smallGarbage.x = canvas.width;
 		game.smallGarbage.y = (Math.random() * 300)
+	}
+	if(game.animalHero.checkCollision(game.winTurtle)) {
+		game.animalHero.findMate();
 	}
 	window.requestAnimationFrame(animate);
 }
