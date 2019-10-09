@@ -20,12 +20,15 @@ const showHealth = document.getElementById("HEALTH");
 
 const selectTurtle = document.getElementById("selectTurtle");
 const playTurtle = document.getElementById("playTurtle");
+const winTurtle = document.getElementById("winTurtle")
 
 const selectShark = document.getElementById("selectShark");
 const playShark = document.getElementById("playShark");
+const winShark = document.getElementById("winShark")
 
 const selectWhale = document.getElementById("selectWhale");
 const playWhale = document.getElementById("playWhale");
+const winWhale = document.getElementById("winWhale");
 
 const smallTrash = document.getElementById("smallTrash");
 const smallFood = document.getElementById("smallFood");
@@ -116,6 +119,7 @@ class Animal {
 		youWinWindow.classList.remove("hidden");
 		youWinWindow.style.height = "360px";
 		winStatement.classList.remove("hidden");
+		game.animalWin.draw();
 	}
 }
 
@@ -174,7 +178,7 @@ class Garbage {
 //declaration of win condition class
 class WinCondition {
 	constructor(winImage, winHeight, winWidth, winColor, winSpeed){
-		this.x = 800;
+		this.x = 320;
 		this.y = (Math.random() * 300);
 		this.image = winImage;
 		this.height = winHeight;
@@ -194,8 +198,8 @@ class WinCondition {
 
 		setTimeout(() => {
 			this.x -= this.speed
-			// if(this.x === 0){
-			// };
+			if(this.x === 0){
+			};
 		}, 5000);
 			// this.x = canvas.width
 			// this.y = (Math.random() * 300)
@@ -232,15 +236,15 @@ const game = {
 		selectionWindow.classList.remove("hidden");
 		if (whichAnimal == "turtle") {
 			this.animalHero = new Animal(playTurtle, 40, 60, "green", 10, 50, 50)
-			this.animalWin = new WinCondition("winTurtle", 40, 60, "green", 10)
+			this.animalWin = new WinCondition(winTurtle, 40, 60, "green", 10)
 		}
 		else if (whichAnimal == "shark") {
 			this.animalHero = new Animal(playShark, 60, 160, "grey", 5, 100, 100)
-			this.animalWin = new WinCondition("winShark", 60, 160, "grey", 5, 100, 100)
+			this.animalWin = new WinCondition(winShark, 60, 160, "grey", 5, 100, 100)
 		}
 		else if (whichAnimal == "whale") {
 			this.animalHero = new Animal(playWhale, 100, 240, "lightblue", 2, 200, 200)
-			this.animalWin = new WinCondition("winWhale", 100, 240, "lightblue", 2, 200)
+			this.animalWin = new WinCondition(winWhale, 100, 240, "lightblue", 2, 200)
 		}
 	},
 
