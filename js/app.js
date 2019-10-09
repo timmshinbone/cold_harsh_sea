@@ -106,8 +106,8 @@ class Animal {
 		else return false;
 	}
 	dieMiserably() {
-		console.log("You have died in the cold, harsh, sea");
-		// stopAnimation();
+		// console.log("You have died in the cold, harsh, sea");
+		stopAnimation();
 		canvas.style.height = "0px";
 		canvas.classList.add("hidden")
 		gameOverWindow.classList.remove("hidden");
@@ -115,7 +115,8 @@ class Animal {
 		deathStatement.classList.remove("hidden");
 	}
 	findMate () {
-		console.log("You are biologically successful in the cold, harsh, sea");
+		// console.log("You are biologically successful in the cold, harsh, sea");
+		stopAnimation();
 		canvas.style.height = "0px";
 		canvas.classList.add("hidden")
 		youWinWindow.classList.remove("hidden");
@@ -370,10 +371,10 @@ function animate() {
 	window.requestAnimationFrame(animate);
 }
 
-// function stopAnimation() {
-// 	cancelAnimationFrame(requestID)
-// 	animationRunning = false;	
-// };
+function stopAnimation() {
+	cancelAnimationFrame(animate)
+	animationRunning = false;	
+};
 
 game.selectAnimal();
 
