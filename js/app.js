@@ -173,10 +173,10 @@ class Garbage {
 
 	move() {
 		this.x -= this.speed;
-		if(this.x === 0){
-			this.x = canvas.width;
-			this.y = (Math.random() * 300)
-		}
+		// if(this.x === 0){
+		// 	this.x = canvas.width;
+		// 	this.y = (Math.random() * 300)
+		// }
 	}
 }
 
@@ -198,11 +198,11 @@ class WinCondition {
 
 	move() {
 		this.x -= this.speed
-	if(this.x === 0 - this.width) {
-		setTimeout(() => {
-			this.x = canvas.width + this.width
-		}, 10000);
-	};
+		if(this.x === 0 - this.width) {
+			setTimeout(() => {
+				this.x = canvas.width + this.width
+			}, 10000);
+		};
 			// this.x = canvas.width
 			// this.y = (Math.random() * 300)
 	}
@@ -215,20 +215,80 @@ const game = {
 	//variable instantiates new animal based on selectAnimal(whichAnimal) function
 	animalHero: null,
 	animalWin: null,
+	time: 0,
+	floatingDebris: [],
+
+
+
+	startTimer() {
+		const interval = setInterval(() => {
+			this.time += 1;
+
+			this.createGarbage();
+
+			if(this.animalHero.currentHealth <= 0){
+				clearInterval(interval)
+			}
+		}, 800);
+	},
+
 	// foodObjects: [
 	// 	{smallFood: new Food("small", 20, 20, "palegreen", 5, 10)},
 	// ],
 	smallFood: new Food("small", 20, 20, smallFood, 2, 10),
 
-	// floatingDebris: [
-	// 	{smallGarbage: new Garbage("straw", 20, 20, "sienna", 5, 10)}
-	// ],
-	smallGarbage: new Garbage("straw", 20, 20, smallTrash, 4, 10),
-	medGarbage: new Garbage("plasticBag", 32, 32, medTrash, 5, 15),
-	lrgGarbage: new Garbage("tire", 60, 60, lrgTrash, 2, 25),
+	// smallGarbage: new Garbage("straw", 20, 20, smallTrash, 4, 10),
+	// medGarbage: new Garbage("plasticBag", 32, 32, medTrash, 5, 15),
+	// lrgGarbage: new Garbage("tire", 60, 60, lrgTrash, 2, 25),	
 
-	// winTurtle: new WinCondition("image", 40, 60, "green", 10),
-	
+
+
+
+	// smallGarbage: new Garbage("straw", 20, 20, smallTrash, 4, 10),
+	// medGarbage: new Garbage("plasticBag", 32, 32, medTrash, 5, 15),
+	// lrgGarbage: new Garbage("tire", 60, 60, lrgTrash, 2, 25),
+
+	createGarbage() {
+		// instantiate random garb, push to array
+		let randNum = Math.floor(Math.random() * 3);
+		const straw = new Garbage("straw", 20, 20, smallTrash, 4, 10);
+		const bag = new Garbage("plasticBag", 32, 32, medTrash, 5, 15);
+		const tire = new Garbage("tire", 60, 60, lrgTrash, 2, 25);
+		if(randNum === 0) {
+			this.floatingDebris.push(straw);
+		}
+		if(randNum === 1) {
+			this.floatingDebris.push(bag);
+		}
+		if(randNum === 2) {
+			this.floatingDebris.push(tire);
+		}
+	},
+
+	drawGarbage() {
+		for(let i = 0; i < this.floatingDebris.length; i++){
+			this.floatingDebris[i].draw();
+		}
+	},
+
+	moveGarbage() {
+		for(let i = 0; i < this.floatingDebris.length; i++){
+			this.floatingDebris[i].move();
+			if(this.floatingDebris[i].x <= 0){
+				this.floatingDebris.splice(i, 1);
+			}
+			if(game.animalHero.checkCollision(this.floatingDebris[i])) {
+				this.floatingDebris.splice(i, 1);
+				if(game.animalHero.currentHealth > 0) {
+					game.animalHero.currentHealth -= this.floatingDebris[i].damage;
+				}
+				if(game.animalHero.currentHealth <= 0){
+					game.animalHero.dieMiserably();
+				}
+			}
+		}
+	},
+
 	selectAnimal(whichAnimal){
 		canvas.classList.add("hidden");
 		gameOverWindow.classList.add("hidden");
@@ -250,9 +310,13 @@ const game = {
 			this.animalHero = new Animal(playWhale, 100, 240, "lightblue", 2, 200, 200)
 			this.animalWin = new WinCondition(winWhale, 100, 240, "lightblue", 2, 200)
 		}
-	},
-
+	}
 }
+	
+	// winTurtle: new WinCondition("image", 40, 60, "green", 10),
+	
+
+
 
 // //declare stop animation to be called upon game win/lose
 // let requestID;
@@ -267,64 +331,61 @@ function animate() {
 
 	game.animalHero.move();
 	game.smallFood.move();
-	game.smallGarbage.move();
-	game.medGarbage.move();
-	game.lrgGarbage.move();
+	game.moveGarbage();
+	
 	setTimeout(() => {
 		game.animalWin.move();
 	}, 10000);
 
 	clearCanvas();
 
+	game.drawGarbage();
 	game.smallFood.draw();
-	game.smallGarbage.draw();
-	game.medGarbage.draw();
-	game.lrgGarbage.draw();
 	game.animalWin.draw();
 	game.animalHero.draw();
 	showHealth.innerText = "HEALTH: " + game.animalHero.currentHealth;
 
-	if(game.animalHero.checkCollision(game.smallFood)) {
-		console.log("You got some food!");
-		if(game.animalHero.currentHealth > 0 && game.animalHero.currentHealth < game.animalHero.maxHealth){
-			game.animalHero.currentHealth += game.smallFood.health;
-		}
-		game.smallFood.x = canvas.width;
-		game.smallFood.y = (Math.random() * 300)
-	}
-	if(game.animalHero.checkCollision(game.smallGarbage)) {
-		console.log("You got nailed by some garbage!");
-		if(game.animalHero.currentHealth > 0) {
-			game.animalHero.currentHealth -= game.smallGarbage.damage;
-		}
-		if(game.animalHero.currentHealth <= 0){
-			game.animalHero.dieMiserably();
-		}
-		game.smallGarbage.x = canvas.width;
-		game.smallGarbage.y = (Math.random() * 300)
-	}
-	if(game.animalHero.checkCollision(game.medGarbage)) {
-		console.log("You got nailed by some garbage!");
-		if(game.animalHero.currentHealth > 0) {
-			game.animalHero.currentHealth -= game.medGarbage.damage;
-		}
-		if(game.animalHero.currentHealth <= 0){
-			game.animalHero.dieMiserably();
-		}
-		game.medGarbage.x = canvas.width;
-		game.medGarbage.y = (Math.random() * 300)
-	}
-	if(game.animalHero.checkCollision(game.lrgGarbage)) {
-		console.log("You got nailed by some garbage!");
-		if(game.animalHero.currentHealth > 0) {
-			game.animalHero.currentHealth -= game.lrgGarbage.damage;
-		}
-		if(game.animalHero.currentHealth <= 0){
-			game.animalHero.dieMiserably();
-		}
-		game.lrgGarbage.x = canvas.width;
-		game.lrgGarbage.y = (Math.random() * 300)
-	}
+	// if(game.animalHero.checkCollision(game.smallFood)) {
+	// 	console.log("You got some food!");
+	// 	if(game.animalHero.currentHealth > 0 && game.animalHero.currentHealth < game.animalHero.maxHealth){
+	// 		game.animalHero.currentHealth += game.smallFood.health;
+	// 	}
+	// 	game.smallFood.x = canvas.width;
+	// 	game.smallFood.y = (Math.random() * 300)
+	// }
+	// if(game.animalHero.checkCollision(game.smallGarbage)) {
+	// 	console.log("You got nailed by some garbage!");
+	// 	if(game.animalHero.currentHealth > 0) {
+	// 		game.animalHero.currentHealth -= game.smallGarbage.damage;
+	// 	}
+	// 	if(game.animalHero.currentHealth <= 0){
+	// 		game.animalHero.dieMiserably();
+	// 	}
+	// 	game.smallGarbage.x = canvas.width;
+	// 	game.smallGarbage.y = (Math.random() * 300)
+	// }
+	// if(game.animalHero.checkCollision(game.medGarbage)) {
+	// 	console.log("You got nailed by some garbage!");
+	// 	if(game.animalHero.currentHealth > 0) {
+	// 		game.animalHero.currentHealth -= game.medGarbage.damage;
+	// 	}
+	// 	if(game.animalHero.currentHealth <= 0){
+	// 		game.animalHero.dieMiserably();
+	// 	}
+	// 	game.medGarbage.x = canvas.width;
+	// 	game.medGarbage.y = (Math.random() * 300)
+	// }
+	// if(game.animalHero.checkCollision(game.lrgGarbage)) {
+	// 	console.log("You got nailed by some garbage!");
+	// 	if(game.animalHero.currentHealth > 0) {
+	// 		game.animalHero.currentHealth -= game.lrgGarbage.damage;
+	// 	}
+	// 	if(game.animalHero.currentHealth <= 0){
+	// 		game.animalHero.dieMiserably();
+	// 	}
+	// 	game.lrgGarbage.x = canvas.width;
+	// 	game.lrgGarbage.y = (Math.random() * 300)
+	// }
 	if(game.animalHero.checkCollision(game.animalWin)) {
 		game.animalHero.findMate();
 	}
@@ -371,7 +432,7 @@ selectTurtle.addEventListener('click', (event) => {
 	selectWhale.classList.add("hidden");
 	game.selectAnimal("turtle");
 	canvas.classList.remove('hidden');
-	console.log(game.animalHero)
+	game.startTimer();
 	animate();
 	// game.startTheClock();
 });
@@ -385,7 +446,7 @@ selectShark.addEventListener('click', (event) => {
 	selectWhale.classList.add("hidden");
 	game.selectAnimal("shark");
 	canvas.classList.remove('hidden');
-	console.log(game.animalHero)
+	game.startTimer();
 	animate();
 });
 
@@ -398,7 +459,7 @@ selectWhale.addEventListener('click', (event) => {
 	selectWhale.classList.add("hidden");
 	game.selectAnimal("whale");
 	canvas.classList.remove('hidden');
-	console.log(game.animalHero)
+	game.startTimer();
 	animate();
 });
 
