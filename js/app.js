@@ -147,10 +147,10 @@ class Food {
 
 	move() {
 		this.x -= this.speed;
-		if(this.x === 0){
-			this.x = canvas.width
-			this.y = (Math.random() * 300)
-		};
+		// if(this.x === 0){
+		// 	this.x = canvas.width
+		// 	this.y = (Math.random() * 300)
+		// };
 	}
 }
 
@@ -173,10 +173,6 @@ class Garbage {
 
 	move() {
 		this.x -= this.speed;
-		// if(this.x === 0){
-		// 	this.x = canvas.width;
-		// 	this.y = (Math.random() * 300)
-		// }
 	}
 }
 
@@ -203,8 +199,6 @@ class WinCondition {
 				this.x = canvas.width + this.width
 			}, 10000);
 		};
-			// this.x = canvas.width
-			// this.y = (Math.random() * 300)
 	}
 }
 
@@ -217,7 +211,7 @@ const game = {
 	animalWin: null,
 	time: 0,
 	floatingDebris: [],
-
+	foodItems: [],
 
 
 	startTimer() {
@@ -225,6 +219,7 @@ const game = {
 			this.time += 1;
 
 			this.createGarbage();
+			this.createFood();
 
 			if(this.animalHero.currentHealth <= 0){
 				clearInterval(interval)
@@ -235,18 +230,7 @@ const game = {
 	// foodObjects: [
 	// 	{smallFood: new Food("small", 20, 20, "palegreen", 5, 10)},
 	// ],
-	smallFood: new Food("small", 20, 20, smallFood, 2, 10),
-
-	// smallGarbage: new Garbage("straw", 20, 20, smallTrash, 4, 10),
-	// medGarbage: new Garbage("plasticBag", 32, 32, medTrash, 5, 15),
-	// lrgGarbage: new Garbage("tire", 60, 60, lrgTrash, 2, 25),	
-
-
-
-
-	// smallGarbage: new Garbage("straw", 20, 20, smallTrash, 4, 10),
-	// medGarbage: new Garbage("plasticBag", 32, 32, medTrash, 5, 15),
-	// lrgGarbage: new Garbage("tire", 60, 60, lrgTrash, 2, 25),
+	// smallFood: new Food("small", 20, 20, smallFood, 2, 10),
 
 	createGarbage() {
 		// instantiate random garb, push to array
@@ -278,17 +262,54 @@ const game = {
 				this.floatingDebris.splice(i, 1);
 			}
 			if(game.animalHero.checkCollision(this.floatingDebris[i])) {
-				this.floatingDebris.splice(i, 1);
 				if(game.animalHero.currentHealth > 0) {
 					game.animalHero.currentHealth -= this.floatingDebris[i].damage;
 				}
 				if(game.animalHero.currentHealth <= 0){
 					game.animalHero.dieMiserably();
 				}
+				this.floatingDebris.splice(i, 1);
 			}
 		}
 	},
+	createFood() {
+		// instantiate random garb, push to array
+		let randFood = Math.floor(Math.random() * 3);
+		const jellyfish = new Food("small", 20, 20, smallFood, 2, 10);
+		const jellyfish2 = new Food("small", 20, 20, smallFood, 2, 10);
+		const jellyfish3 = new Food("small", 20, 20, smallFood, 2, 10);
+		if(randFood === 0) {
+			this.foodItems.push(jellyfish);
+		}
+		if(randFood === 1) {
+			this.foodItems.push(jellyfish2);
+		}
+		if(randFood === 2) {
+			this.foodItems.push(jellyfish3);
+		}
+	},
 
+	drawFood() {
+		for(let i = 0; i < this.foodItems.length; i++){
+			this.foodItems[i].draw();
+		}
+	},
+
+	moveFood() {
+		for(let i = 0; i < this.foodItems.length; i++){
+			this.foodItems[i].move();
+			if(this.foodItems[i].x <= 0){
+				this.foodItems.splice(i, 1);
+			}
+			if(game.animalHero.checkCollision(this.foodItems[i])) {
+				if(game.animalHero.currentHealth < game.animalHero.maxHealth) {
+					game.animalHero.currentHealth += this.foodItems[i].health;
+				}
+				this.foodItems.splice(i, 1);
+			}
+		}
+	},
+	//animal selection screen, the first thing you see upon load
 	selectAnimal(whichAnimal){
 		canvas.classList.add("hidden");
 		gameOverWindow.classList.add("hidden");
@@ -313,8 +334,6 @@ const game = {
 	}
 }
 	
-	// winTurtle: new WinCondition("image", 40, 60, "green", 10),
-	
 
 
 
@@ -330,9 +349,9 @@ function animate() {
 	selectionWindow.style.height = "0px";
 
 	game.animalHero.move();
-	game.smallFood.move();
+	game.moveFood();
 	game.moveGarbage();
-	
+	//calls win condition animal every x seconds
 	setTimeout(() => {
 		game.animalWin.move();
 	}, 10000);
@@ -340,52 +359,11 @@ function animate() {
 	clearCanvas();
 
 	game.drawGarbage();
-	game.smallFood.draw();
+	game.drawFood();
 	game.animalWin.draw();
 	game.animalHero.draw();
 	showHealth.innerText = "HEALTH: " + game.animalHero.currentHealth;
 
-	// if(game.animalHero.checkCollision(game.smallFood)) {
-	// 	console.log("You got some food!");
-	// 	if(game.animalHero.currentHealth > 0 && game.animalHero.currentHealth < game.animalHero.maxHealth){
-	// 		game.animalHero.currentHealth += game.smallFood.health;
-	// 	}
-	// 	game.smallFood.x = canvas.width;
-	// 	game.smallFood.y = (Math.random() * 300)
-	// }
-	// if(game.animalHero.checkCollision(game.smallGarbage)) {
-	// 	console.log("You got nailed by some garbage!");
-	// 	if(game.animalHero.currentHealth > 0) {
-	// 		game.animalHero.currentHealth -= game.smallGarbage.damage;
-	// 	}
-	// 	if(game.animalHero.currentHealth <= 0){
-	// 		game.animalHero.dieMiserably();
-	// 	}
-	// 	game.smallGarbage.x = canvas.width;
-	// 	game.smallGarbage.y = (Math.random() * 300)
-	// }
-	// if(game.animalHero.checkCollision(game.medGarbage)) {
-	// 	console.log("You got nailed by some garbage!");
-	// 	if(game.animalHero.currentHealth > 0) {
-	// 		game.animalHero.currentHealth -= game.medGarbage.damage;
-	// 	}
-	// 	if(game.animalHero.currentHealth <= 0){
-	// 		game.animalHero.dieMiserably();
-	// 	}
-	// 	game.medGarbage.x = canvas.width;
-	// 	game.medGarbage.y = (Math.random() * 300)
-	// }
-	// if(game.animalHero.checkCollision(game.lrgGarbage)) {
-	// 	console.log("You got nailed by some garbage!");
-	// 	if(game.animalHero.currentHealth > 0) {
-	// 		game.animalHero.currentHealth -= game.lrgGarbage.damage;
-	// 	}
-	// 	if(game.animalHero.currentHealth <= 0){
-	// 		game.animalHero.dieMiserably();
-	// 	}
-	// 	game.lrgGarbage.x = canvas.width;
-	// 	game.lrgGarbage.y = (Math.random() * 300)
-	// }
 	if(game.animalHero.checkCollision(game.animalWin)) {
 		game.animalHero.findMate();
 	}
