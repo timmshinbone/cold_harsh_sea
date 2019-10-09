@@ -356,7 +356,7 @@ function animate() {
 	//calls win condition animal every x seconds
 	setTimeout(() => {
 		game.animalWin.move();
-	}, 10000);
+	}, 30000);
 
 	clearCanvas();
 
