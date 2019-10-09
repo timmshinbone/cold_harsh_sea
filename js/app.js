@@ -234,11 +234,6 @@ const game = {
 		}, 800);
 	},
 
-	// foodObjects: [
-	// 	{smallFood: new Food("small", 20, 20, "palegreen", 5, 10)},
-	// ],
-	// smallFood: new Food("small", 20, 20, smallFood, 2, 10),
-
 	createGarbage() {
 		// instantiate random garb, push to array
 		let randNum = Math.floor(Math.random() * 3);
@@ -393,7 +388,6 @@ game.selectAnimal();
 // set directions and abilities of Animals
 document.addEventListener('keydown', (event) => {
 	game.animalHero.setDirection(event.key);
-	console.log(event)
 });
 
 // used to "pause" movement of Animals
@@ -402,11 +396,6 @@ document.addEventListener('keyup', (event) => {
 		game.animalHero.unsetDirection(event.key);
 	}
 })
-
-// start the animation frames
-// document.getElementById('startButton').addEventListener('click', (event) => {
-// 	animate();
-// });
 
 //pick and start play as the turtle
 selectTurtle.addEventListener('click', (event) => {
@@ -465,22 +454,18 @@ leftButton.addEventListener('mousedown', (event) => {
 })
 
 upButton.addEventListener('mouseup', (event) => {
-	console.log("up works")
 	game.animalHero.unsetDirection("ArrowUp")
 })
 
 rightButton.addEventListener('mouseup', (event) => {
-	console.log("right works")
 	game.animalHero.unsetDirection("ArrowRight")
 })
 
 downButton.addEventListener('mouseup', (event) => {
-	console.log("down works")
 	game.animalHero.unsetDirection("ArrowDown")
 })
 
 leftButton.addEventListener('mouseup', (event) => {
-	console.log("left works")
 	game.animalHero.unsetDirection("ArrowLeft")
 })
 
