@@ -35,6 +35,10 @@ const medTrash = document.getElementById("plasticBagDebris");
 const lrgTrash = document.getElementById("tireDebris");
 const smallFood = document.getElementById("smallFood");
 
+const upButton = document.getElementById("ArrowUp");
+const leftButton = document.getElementById("ArrowLeft");
+const downButton = document.getElementById("ArrowDown");
+const rightButton = document.getElementById("ArrowRight");
 
 //declaration of Animal class
 class Animal {
@@ -396,7 +400,6 @@ document.addEventListener('keyup', (event) => {
 	}
 })
 
-
 // start the animation frames
 // document.getElementById('startButton').addEventListener('click', (event) => {
 // 	animate();
@@ -442,6 +445,25 @@ selectWhale.addEventListener('click', (event) => {
 	animate();
 });
 
+upButton.addEventListener('click', (event) => {
+	console.log("up works")
+	// game.animalHero.setDirection("ArrowUp")
+})
+
+rightButton.addEventListener('click', (event) => {
+	console.log("right works")
+	// game.animalHero.setDirection("ArrowRight")
+})
+
+downButton.addEventListener('click', (event) => {
+	console.log("down works")
+	// game.animalHero.setDirection("ArrowDown")
+})
+
+leftButton.addEventListener('click', (event) => {
+	console.log("left works")
+	// game.animalHero.setDirection("ArrowLeft")
+})
 
 
 
