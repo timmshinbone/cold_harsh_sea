@@ -174,7 +174,7 @@ class Garbage {
 //declaration of win condition class
 class WinCondition {
 	constructor(winImage, winHeight, winWidth, winColor, winSpeed){
-		this.x = 600;
+		this.x = 800;
 		this.y = (Math.random() * 300);
 		this.image = winImage;
 		this.height = winHeight;
@@ -191,24 +191,24 @@ class WinCondition {
 	}
 
 	move() {
-		this.x -= this.speed;
-		if(this.x === 0){
-			setTimeout(() => {
-				this.x = canvas.width
-				this.y = (Math.random() * 300)
-			}, 10000);
+
+		setTimeout(() => {
+			this.x -= this.speed
+			// if(this.x === 0){
+			// };
+		}, 5000);
 			// this.x = canvas.width
 			// this.y = (Math.random() * 300)
-		}
 	}
 }
+
 
 
 const game = {
 
 	//variable instantiates new animal based on selectAnimal(whichAnimal) function
 	animalHero: null,
-
+	animalWin: null,
 	// foodObjects: [
 	// 	{smallFood: new Food("small", 20, 20, "palegreen", 5, 10)},
 	// ],
@@ -219,7 +219,7 @@ const game = {
 	// ],
 	smallGarbage: new Garbage("straw", 20, 20, smallTrash, 4, 10),
 
-	winTurtle: new WinCondition("image", 40, 60, "green", 10),
+	// winTurtle: new WinCondition("image", 40, 60, "green", 10),
 
 	selectAnimal(whichAnimal){
 		canvas.classList.add("hidden");
@@ -232,12 +232,15 @@ const game = {
 		selectionWindow.classList.remove("hidden");
 		if (whichAnimal == "turtle") {
 			this.animalHero = new Animal(playTurtle, 40, 60, "green", 10, 50, 50)
+			this.animalWin = new WinCondition("winTurtle", 40, 60, "green", 10)
 		}
 		else if (whichAnimal == "shark") {
 			this.animalHero = new Animal(playShark, 60, 160, "grey", 5, 100, 100)
+			this.animalWin = new WinCondition("winShark", 60, 160, "grey", 5, 100, 100)
 		}
 		else if (whichAnimal == "whale") {
 			this.animalHero = new Animal(playWhale, 100, 240, "lightblue", 2, 200, 200)
+			this.animalWin = new WinCondition("winWhale", 100, 240, "lightblue", 2, 200)
 		}
 	},
 
@@ -257,13 +260,13 @@ function animate() {
 	game.animalHero.move();
 	game.smallFood.move();
 	game.smallGarbage.move();
-	game.winTurtle.move();
+	game.animalWin.move();
 
 	clearCanvas();
 
 	game.smallFood.draw();
 	game.smallGarbage.draw();
-	game.winTurtle.draw();
+	game.animalWin.draw();
 	game.animalHero.draw();
 	showHealth.innerText = "HEALTH: " + game.animalHero.currentHealth;
 
@@ -287,7 +290,7 @@ function animate() {
 		game.smallGarbage.x = canvas.width;
 		game.smallGarbage.y = (Math.random() * 300)
 	}
-	if(game.animalHero.checkCollision(game.winTurtle)) {
+	if(game.animalHero.checkCollision(game.animalWin)) {
 		game.animalHero.findMate();
 	}
 	window.requestAnimationFrame(animate);
