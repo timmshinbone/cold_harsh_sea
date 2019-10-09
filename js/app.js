@@ -228,7 +228,7 @@ const game = {
 	lrgGarbage: new Garbage("tire", 60, 60, lrgTrash, 2, 25),
 
 	// winTurtle: new WinCondition("image", 40, 60, "green", 10),
-
+	
 	selectAnimal(whichAnimal){
 		canvas.classList.add("hidden");
 		gameOverWindow.classList.add("hidden");
@@ -337,11 +337,6 @@ function animate() {
 // };
 
 game.selectAnimal();
-
-
-// const health = document.getElementById("HEALTH");
-// health.innerText("HEALTH: " + turtle.health);
-
 
 
 
