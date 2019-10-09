@@ -34,11 +34,13 @@ const smallTrash = document.getElementById("smallTrash");
 const medTrash = document.getElementById("plasticBagDebris");
 const lrgTrash = document.getElementById("tireDebris");
 const smallFood = document.getElementById("smallFood");
+const fishFood = document.getElementById("foodFish");
+const shrimp = document.getElementById("shrimpCocktail")
 
-const upButton = document.getElementById("ArrowUp");
-const leftButton = document.getElementById("ArrowLeft");
-const downButton = document.getElementById("ArrowDown");
-const rightButton = document.getElementById("ArrowRight");
+const upButton = document.getElementById("upButton");
+const leftButton = document.getElementById("leftButton");
+const downButton = document.getElementById("downButton");
+const rightButton = document.getElementById("rightButton");
 
 //declaration of Animal class
 class Animal {
@@ -281,16 +283,16 @@ const game = {
 		// instantiate random garb, push to array
 		let randFood = Math.floor(Math.random() * 3);
 		const jellyfish = new Food("small", 20, 20, smallFood, 2, 10);
-		const jellyfish2 = new Food("small", 20, 20, smallFood, 2, 10);
-		const jellyfish3 = new Food("small", 20, 20, smallFood, 2, 10);
+		const smallFish = new Food("small", 20, 32, fishFood, 2, 15);
+		const shrimpCocktail = new Food("small", 20, 20, shrimp, 2, 50);
 		if(randFood === 0) {
 			this.foodItems.push(jellyfish);
 		}
 		if(randFood === 1) {
-			this.foodItems.push(jellyfish2);
+			this.foodItems.push(smallFish);
 		}
 		if(randFood === 2) {
-			this.foodItems.push(jellyfish3);
+			this.foodItems.push(shrimpCocktail);
 		}
 	},
 
@@ -391,6 +393,7 @@ game.selectAnimal();
 // set directions and abilities of Animals
 document.addEventListener('keydown', (event) => {
 	game.animalHero.setDirection(event.key);
+	console.log(event)
 });
 
 // used to "pause" movement of Animals
@@ -445,26 +448,41 @@ selectWhale.addEventListener('click', (event) => {
 	animate();
 });
 
-upButton.addEventListener('click', (event) => {
+upButton.addEventListener('mousedown', (event) => {
+	game.animalHero.setDirection("ArrowUp")
+})
+
+rightButton.addEventListener('mousedown', (event) => {
+	game.animalHero.setDirection("ArrowRight")
+})
+
+downButton.addEventListener('mousedown', (event) => {
+	game.animalHero.setDirection("ArrowDown")
+})
+
+leftButton.addEventListener('mousedown', (event) => {
+	game.animalHero.setDirection("ArrowLeft")
+})
+
+upButton.addEventListener('mouseup', (event) => {
 	console.log("up works")
-	// game.animalHero.setDirection("ArrowUp")
+	game.animalHero.unsetDirection("ArrowUp")
 })
 
-rightButton.addEventListener('click', (event) => {
+rightButton.addEventListener('mouseup', (event) => {
 	console.log("right works")
-	// game.animalHero.setDirection("ArrowRight")
+	game.animalHero.unsetDirection("ArrowRight")
 })
 
-downButton.addEventListener('click', (event) => {
+downButton.addEventListener('mouseup', (event) => {
 	console.log("down works")
-	// game.animalHero.setDirection("ArrowDown")
+	game.animalHero.unsetDirection("ArrowDown")
 })
 
-leftButton.addEventListener('click', (event) => {
+leftButton.addEventListener('mouseup', (event) => {
 	console.log("left works")
-	// game.animalHero.setDirection("ArrowLeft")
+	game.animalHero.unsetDirection("ArrowLeft")
 })
-
 
 
 
