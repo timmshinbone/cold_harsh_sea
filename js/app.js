@@ -17,6 +17,7 @@ const youWinWindow = document.getElementById("you-win-window");
 const winStatement = document.getElementById("winStatement")
 
 const showHealth = document.getElementById("HEALTH");
+const update = document.getElementById("message");
 
 const selectTurtle = document.getElementById("selectTurtle");
 const playTurtle = document.getElementById("playTurtle");
@@ -237,9 +238,9 @@ const game = {
 	createGarbage() {
 		// instantiate random garb, push to array
 		let randNum = Math.floor(Math.random() * 3);
-		const straw = new Garbage("straw", 20, 20, smallTrash, 4, 10);
-		const bag = new Garbage("plasticBag", 32, 32, medTrash, 5, 15);
-		const tire = new Garbage("tire", 60, 60, lrgTrash, 2, 25);
+		const straw = new Garbage("STRAW", 20, 20, smallTrash, 4, 10);
+		const bag = new Garbage("PLASTIC BAG", 32, 32, medTrash, 5, 15);
+		const tire = new Garbage("TIRE", 60, 60, lrgTrash, 2, 25);
 		if(randNum === 0) {
 			this.floatingDebris.push(straw);
 		}
@@ -266,9 +267,11 @@ const game = {
 			if(game.animalHero.checkCollision(this.floatingDebris[i])) {
 				if(game.animalHero.currentHealth > 0) {
 					game.animalHero.currentHealth -= this.floatingDebris[i].damage;
+					update.innerText = "EW! THAT WAS A " + this.floatingDebris[i].type + "!";
 				}
 				if(game.animalHero.currentHealth <= 0){
 					game.animalHero.dieMiserably();
+					update.innerText = "DEATH BY " + this.floatingDebris[i].type + "!";
 				}
 				this.floatingDebris.splice(i, 1);
 			}
@@ -277,9 +280,9 @@ const game = {
 	createFood() {
 		// instantiate random garb, push to array
 		let randFood = Math.floor(Math.random() * 3);
-		const jellyfish = new Food("small", 20, 20, smallFood, 2, 10);
-		const smallFish = new Food("small", 20, 32, fishFood, 2, 15);
-		const shrimpCocktail = new Food("small", 20, 20, shrimp, 2, 50);
+		const jellyfish = new Food("JELLYFISH", 20, 20, smallFood, 2, 10);
+		const smallFish = new Food("LIL FISH", 20, 32, fishFood, 5, 15);
+		const shrimpCocktail = new Food("SHRIMP COCKTAIL", 20, 20, shrimp, 8, 50);
 		if(randFood === 0) {
 			this.foodItems.push(jellyfish);
 		}
@@ -304,6 +307,7 @@ const game = {
 				this.foodItems.splice(i, 1);
 			}
 			if(game.animalHero.checkCollision(this.foodItems[i])) {
+				update.innerText = "YUM! A " + this.foodItems[i].type + "!";
 				if(game.animalHero.currentHealth < game.animalHero.maxHealth) {
 					game.animalHero.currentHealth += this.foodItems[i].health;
 				}
