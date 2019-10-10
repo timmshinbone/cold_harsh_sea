@@ -29,6 +29,10 @@ h6 {
 	color: white;
 }
 
+#gameTitle {
+	margin-top: 15px;
+}
+
 #selection-window {
 	display: flex;
 	flex-direction: row;

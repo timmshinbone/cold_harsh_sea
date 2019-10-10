@@ -232,7 +232,7 @@ const game = {
 			if(this.animalHero.currentHealth <= 0){
 				clearInterval(interval)
 			}
-		}, 800);
+		}, 700);
 	},
 
 	createGarbage() {
