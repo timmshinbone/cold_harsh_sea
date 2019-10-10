@@ -114,7 +114,7 @@ class Animal {
 	}
 	dieMiserably() {
 		// console.log("You have died in the cold, harsh, sea");
-		stopAnimation();
+		// stopAnimation();
 		canvas.style.height = "0px";
 		canvas.classList.add("hidden")
 		gameOverWindow.classList.remove("hidden");
@@ -123,7 +123,7 @@ class Animal {
 	}
 	findMate () {
 		// console.log("You are biologically successful in the cold, harsh, sea");
-		stopAnimation();
+		// stopAnimation();
 		canvas.style.height = "0px";
 		canvas.classList.add("hidden")
 		youWinWindow.classList.remove("hidden");
@@ -205,8 +205,14 @@ class WinCondition {
 		if(this.x === 0 - this.width) {
 			setTimeout(() => {
 				this.x = canvas.width + this.width
-			}, 10000);
+			}, 30000);
 		};
+		if(game.animalHero.checkCollision(game.animalWin)) {
+			game.animalHero.findMate();
+			update.innerText = "YOU FOUND A MATE!";
+			this.x = -500;
+			// stopAnimation();
+		}
 	}
 }
 
@@ -231,6 +237,7 @@ const game = {
 
 			if(this.animalHero.currentHealth <= 0){
 				clearInterval(interval)
+				// stopAnimation();
 			}
 		}, 700);
 	},
@@ -261,9 +268,9 @@ const game = {
 	moveGarbage() {
 		for(let i = 0; i < this.floatingDebris.length; i++){
 			this.floatingDebris[i].move();
-			if(this.floatingDebris[i].x <= 0){
-				this.floatingDebris.splice(i, 1);
-			}
+			// if(this.floatingDebris[i].x <= 0){
+			// 	this.floatingDebris.splice(i, 1);
+			// }
 			if(game.animalHero.checkCollision(this.floatingDebris[i])) {
 				if(game.animalHero.currentHealth > 0) {
 					game.animalHero.currentHealth -= this.floatingDebris[i].damage;
@@ -305,9 +312,9 @@ const game = {
 	moveFood() {
 		for(let i = 0; i < this.foodItems.length; i++){
 			this.foodItems[i].move();
-			if(this.foodItems[i].x <= 0){
-				this.foodItems.splice(i, 1);
-			}
+			// if(this.foodItems[i].x <= 0){
+			// 	this.foodItems.splice(i, 1);
+			// }
 			if(game.animalHero.checkCollision(this.foodItems[i])) {
 				update.innerText = "YUM! A " + this.foodItems[i].type + "!";
 				if(game.animalHero.currentHealth < game.animalHero.maxHealth) {
@@ -316,6 +323,12 @@ const game = {
 				this.foodItems.splice(i, 1);
 			}
 		}
+	},
+
+	createWinCondition() {
+		setTimeout(() => {
+			game.animalWin.move();
+	}, 30000);
 	},
 	//animal selection screen, the first thing you see upon load
 	selectAnimal(whichAnimal){
@@ -353,7 +366,9 @@ const game = {
 // let requestID;
 // let animationRunning = false;
 //animate function is the start of the game
-let x = 0;
+let requestID;
+let animationRunning = false
+
 function animate() {
 
 	// animationRunning = true;
@@ -363,10 +378,12 @@ function animate() {
 	game.animalHero.move();
 	game.moveFood();
 	game.moveGarbage();
+	// game.animalWin.move();
+	game.createWinCondition();
 	//calls win condition animal every x seconds
-	setTimeout(() => {
-		game.animalWin.move();
-	}, 30000);
+	// setTimeout(() => {
+	// 	game.animalWin.move();
+	// }, 30000);
 
 	clearCanvas();
 
@@ -376,17 +393,28 @@ function animate() {
 	game.animalHero.draw();
 	showHealth.innerText = "HEALTH: " + game.animalHero.currentHealth;
 
-	if(game.animalHero.checkCollision(game.animalWin)) {
-		game.animalHero.findMate();
-		update.innerText = "YOU FOUND A MATE!";
+	if(game.animalHero.currentHealth <= 0){
+		clearCanvas();
+		return;
 	}
-	window.requestAnimationFrame(animate);
+	if(game.animalHero.checkCollision(game.animalWin) === true) {
+		clearCanvas();
+		return;
+	} else {
+		requestID = window.requestAnimationFrame(animate);
+	}
+	// if(game.animalHero.checkCollision(game.animalWin)) {
+	// 	game.animalHero.findMate();
+	// 	update.innerText = "YOU FOUND A MATE!";
+	// }
+	// requestID = window.requestAnimationFrame(animate);
 }
 
 function stopAnimation() {
-	cancelAnimationFrame(animate)
+	cancelAnimationFrame(requestID)
 	console.log("Animation Stopped")
-	animationRunning = false;	
+	animationRunning = false;
+	clearCanvas();
 };
 
 game.selectAnimal();
