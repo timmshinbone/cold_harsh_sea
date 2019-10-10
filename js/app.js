@@ -268,12 +268,14 @@ const game = {
 				if(game.animalHero.currentHealth > 0) {
 					game.animalHero.currentHealth -= this.floatingDebris[i].damage;
 					update.innerText = "EW! THAT WAS A " + this.floatingDebris[i].type + "!";
+					this.floatingDebris.splice(i, 1);
 				}
 				if(game.animalHero.currentHealth <= 0){
 					game.animalHero.dieMiserably();
 					update.innerText = "DEATH BY " + this.floatingDebris[i].type + "!";
+					this.floatingDebris.splice(i, 1);
 				}
-				this.floatingDebris.splice(i, 1);
+				// this.floatingDebris.splice(i, 1);
 			}
 		}
 	},
@@ -376,12 +378,14 @@ function animate() {
 
 	if(game.animalHero.checkCollision(game.animalWin)) {
 		game.animalHero.findMate();
+		update.innerText = "YOU FOUND A MATE!";
 	}
 	window.requestAnimationFrame(animate);
 }
 
 function stopAnimation() {
 	cancelAnimationFrame(animate)
+	console.log("Animation Stopped")
 	animationRunning = false;	
 };
 
