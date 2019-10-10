@@ -8,6 +8,7 @@ function clearCanvas() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+
 //setting images to variables here for ease of calling them in game
 
 const selectionWindow = document.getElementById("selection-window");
@@ -21,7 +22,7 @@ const update = document.getElementById("message");
 
 const selectTurtle = document.getElementById("selectTurtle");
 const playTurtle = document.getElementById("playTurtle");
-const winTurtle = document.getElementById("winTurtle")
+const winTurtle = document.getElementById("winTurtle");
 
 const selectShark = document.getElementById("selectShark");
 const playShark = document.getElementById("playShark");
@@ -114,7 +115,8 @@ class Animal {
 	}
 	dieMiserably() {
 		// console.log("You have died in the cold, harsh, sea");
-		// stopAnimation();
+		stopAnimation();
+		clearCanvas();
 		canvas.style.height = "0px";
 		canvas.classList.add("hidden")
 		gameOverWindow.classList.remove("hidden");
@@ -123,7 +125,8 @@ class Animal {
 	}
 	findMate () {
 		// console.log("You are biologically successful in the cold, harsh, sea");
-		// stopAnimation();
+		stopAnimation();
+		clearCanvas();
 		canvas.style.height = "0px";
 		canvas.classList.add("hidden")
 		youWinWindow.classList.remove("hidden");
