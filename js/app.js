@@ -325,17 +325,21 @@ const game = {
 		youWinWindow.style.height = "0px";
 		winStatement.classList.add("hidden");
 		selectionWindow.classList.remove("hidden");
+		update.innerText = "CLICK ANIMAL TO BEGIN";
 		if (whichAnimal == "turtle") {
 			this.animalHero = new Animal(playTurtle, 40, 60, "green", 10, 50, 50)
 			this.animalWin = new WinCondition(winTurtle, 40, 60, "green", 10)
+			update.innerText = "GOOD LUCK TURTLE!";
 		}
 		else if (whichAnimal == "shark") {
 			this.animalHero = new Animal(playShark, 60, 160, "grey", 5, 100, 100)
 			this.animalWin = new WinCondition(winShark, 60, 160, "grey", 5, 100, 100)
+			update.innerText = "GOOD LUCK SHARK!";
 		}
 		else if (whichAnimal == "whale") {
 			this.animalHero = new Animal(playWhale, 100, 240, "lightblue", 2, 200, 200)
 			this.animalWin = new WinCondition(winWhale, 100, 240, "lightblue", 2, 200)
+			update.innerText = "GOOD LUCK WHALE!";
 		}
 	}
 }
