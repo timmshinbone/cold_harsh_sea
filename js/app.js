@@ -44,6 +44,7 @@ const leftButton = document.getElementById("leftButton");
 const downButton = document.getElementById("downButton");
 const rightButton = document.getElementById("rightButton");
 
+const backgroundImg = '../chs_images/CHS_Background/background_1.png'
 //declaration of Animal class
 class Animal {
 	constructor(animalImage, animalHeight, animalWidth, animalColor, animalSpeed, maxHealth, currentHealth){
@@ -511,16 +512,3 @@ downButton.addEventListener('mouseup', (event) => {
 leftButton.addEventListener('mouseup', (event) => {
 	game.animalHero.unsetDirection("ArrowLeft")
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
